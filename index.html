@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FaridEx: AWS IAM attack path analysis, coming 2026</title>
+<meta name="description" content="FaridEx maps AWS IAM trust chains as a graph, ranks exploitable privilege escalation paths, and drafts remediation diffs that a human approves. Coming 2026 from FaridSec.">
+<meta name="theme-color" content="#0F0F15">
+<meta property="og:title" content="FaridEx: find the attack path, cut it at the choke point">
+<meta property="og:description" content="AWS IAM attack path discovery and human-approved AI remediation. Coming 2026.">
+<meta property="og:image" content="https://faridsec.com/logo.png">
+<meta property="og:url" content="https://faridsec.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FaridEx: AWS IAM attack path analysis">
+<meta name="twitter:description" content="Find the attack path. Cut it at the choke point. Coming 2026 from FaridSec.">
+<meta name="twitter:image" content="https://faridsec.com/logo.png">
+<link rel="canonical" href="https://faridsec.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230F0F15'/%3E%3Cpath d='M16 3c1 7 3 10 13 13-10 3-12 6-13 13-1-7-3-10-13-13C13 13 15 10 16 3z' fill='%23556EEE'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Outfit:wght@500;600&display=swap" rel="stylesheet">
+<script>
+/* Hide animated elements before first paint. If Motion fails to load, reveal everything after 4s. */
+(function(){var r=document.documentElement;if(!matchMedia("(prefers-reduced-motion: reduce)").matches){r.classList.add("mo");window.__mo=setTimeout(function(){r.classList.remove("mo")},4000)}})();
+</script>
+<style>
+:root{
+  --bg:#0F0F15; --text:#F3F4F8; --muted:#9CA3B8; --accent:#556EEE; --accent-text:#7B91FF;
+  --line:rgba(243,244,248,.1); --ease:cubic-bezier(.22,1,.36,1);
+  --pad:clamp(1.5rem,5vw,4rem); --gap:clamp(7rem,15vw,13rem);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);color-scheme:dark;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:400 1rem/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+:focus-visible{outline:2px solid var(--accent-text);outline-offset:4px;border-radius:4px}
+.wrap{width:100%;max-width:1320px;margin-inline:auto;padding-inline:var(--pad)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:1.5rem}
+code{font:500 .8125rem/1.4 "JetBrains Mono",monospace;font-variant-ligatures:none;color:var(--accent-text)}
+.muted{color:var(--muted)}
+
+/* hero */
+.hero{min-height:100svh;display:flex;flex-direction:column}
+.hero .wrap{flex:1;display:flex;flex-direction:column}
+.hc{flex:1;display:flex;flex-direction:column;will-change:transform,opacity}
+header{display:flex;justify-content:space-between;align-items:center;padding-top:clamp(1.5rem,3vw,2.25rem)}
+.logo{display:block;width:clamp(140px,15vw,200px);height:auto;filter:drop-shadow(0 2px 14px rgba(85,110,238,.38))}
+header p{font-size:.875rem;color:var(--muted)}
+h1{margin-top:auto;font:600 clamp(2.9rem,8.4vw,7.5rem)/1.02 Outfit,sans-serif;letter-spacing:-.04em;max-width:11ch}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.w i{display:inline-block;font-style:normal}
+.hero-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;padding:clamp(2rem,4vw,3.5rem) 0 clamp(1.75rem,3vw,2.5rem)}
+.lead{max-width:38ch;font-size:1.0625rem;color:var(--muted)}
+.cue{display:flex;align-items:center;gap:.9rem;font-size:.875rem;color:var(--muted);white-space:nowrap}
+.cue::after{content:"";width:3.5rem;height:1px;background:var(--muted);transform-origin:left;animation:cue 2.6s var(--ease) infinite}
+@keyframes cue{0%{transform:scaleX(0)}55%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
+
+/* path */
+.path{padding-block:var(--gap)}
+.path-head{grid-column:1/6;align-self:start;position:sticky;top:22vh}
+h2{font:600 clamp(2rem,4.2vw,3.5rem)/1.08 Outfit,sans-serif;letter-spacing:-.03em;max-width:14ch}
+.path-head p{margin-top:1.25rem;font-size:.9375rem}
+.track{grid-column:7/13;position:relative;list-style:none;padding-left:2.75rem}
+.rail,.fill{position:absolute;left:5px;width:1px}
+.rail{background:var(--line)}
+.fill{background:var(--accent-text);transform-origin:top}
+.step{position:relative;padding-bottom:clamp(5rem,12vw,9rem);transition:opacity .6s var(--ease)}
+.step:last-child{padding-bottom:0}
+.node{position:absolute;left:-2.75rem;top:.6rem;width:11px;height:11px;border-radius:50%;background:var(--bg);border:1px solid var(--muted);transition:background .4s,border-color .4s}
+.node b{position:absolute;inset:-1px;border-radius:50%;border:1px solid var(--accent-text);opacity:0}
+.step.on .node{background:var(--accent-text);border-color:var(--accent-text)}
+.step h3{font:500 clamp(1.5rem,2.4vw,2rem)/1.2 Outfit,sans-serif;letter-spacing:-.02em;margin-bottom:.6rem}
+.step code{display:block;margin-bottom:.9rem}
+.step p{color:var(--muted);max-width:40ch}
+.mo .step{opacity:.32} .mo .step.on{opacity:1}
+.mo .fill{transform:scaleY(0)}
+
+/* capabilities */
+.caps{padding-bottom:var(--gap)}
+.cap{border-top:1px solid var(--line);padding-block:clamp(1.75rem,3vw,2.5rem)}
+.cap h3{grid-column:1/6;font:500 clamp(1.4rem,2.4vw,2rem)/1.2 Outfit,sans-serif;letter-spacing:-.02em}
+.cap p{grid-column:7/13;color:var(--muted);max-width:44ch}
+
+/* notify */
+.notify{padding-bottom:var(--gap)}
+.notify h2{grid-column:1/7;max-width:12ch}
+form{grid-column:7/13;align-self:end;display:flex;flex-wrap:wrap;gap:1rem 1.5rem}
+input{flex:1 1 16rem;min-width:0;background:none;border:0;border-bottom:1px solid rgba(243,244,248,.28);border-radius:0;color:var(--text);font:400 1.25rem Inter,sans-serif;padding:.7rem 0;transition:border-color .2s}
+input::placeholder{color:#6f7690}
+input:hover{border-color:rgba(243,244,248,.55)}
+input:focus{outline:none;border-color:var(--accent-text)}
+button{background:var(--accent);color:var(--bg);border:0;border-radius:999px;font:600 .9375rem Inter,sans-serif;padding:.85rem 1.6rem;cursor:pointer;transition:background .2s,transform .15s,opacity .2s}
+button:hover{background:var(--accent-text)}
+button:active{transform:scale(.97)}
+button:disabled{cursor:not-allowed;opacity:.7}
+.note{flex-basis:100%;font-size:.875rem;color:var(--muted);min-height:1.4em}
+.note.ok{color:var(--accent-text)} .note.err{color:#FF7A6B}
+
+footer{border-top:1px solid var(--line);padding-block:1.75rem 2.25rem;font-size:.875rem;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+footer a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .2s}
+footer a:hover{border-color:var(--text)}
+
+.mo [data-r]{opacity:0}
+.mo .w i{transform:translateY(108%)}
+
+@media (max-width:860px){
+  .path-head,.track,.cap h3,.cap p,.notify h2,form{grid-column:1/-1}
+  .path-head{position:static;margin-bottom:3.5rem}
+  .cap p{margin-top:.75rem}
+  form{margin-top:2.5rem}
+  .cue{display:none}
+  header p{display:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.cue::after{animation:none}}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hc" id="hc">
+      <header>
+        <img class="logo" data-r src="logo.png" width="1000" height="215" alt="Faridex 2026">
+        <p data-r>Launching 2026</p>
+      </header>
+      <h1 aria-label="Find the attack path. Cut it at the choke point."><span aria-hidden="true"><span class="w"><i>Find</i></span> <span class="w"><i>the</i></span> <span class="w"><i>attack</i></span> <span class="w"><i>path.</i></span> <span class="w"><i>Cut</i></span> <span class="w"><i>it</i></span> <span class="w"><i>at</i></span> <span class="w"><i>the</i></span> <span class="w"><i>choke</i></span> <span class="w"><i>point.</i></span></span></h1>
+      <div class="hero-foot">
+        <p class="lead" data-r>FaridEx maps AWS IAM trust chains as a graph, ranks every exploitable route to admin, and drafts least-privilege fixes. A human approves each change.</p>
+        <a class="cue" data-r href="#path" style="color:inherit;text-decoration:none">Scroll</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="path" id="path">
+  <div class="wrap grid">
+    <div class="path-head" data-g>
+      <h2 data-r>One role connects both paths.</h2>
+      <p class="muted" data-r>A sample finding, traced from exposure to severance. Synthetic data.</p>
+    </div>
+    <ol class="track" id="track">
+      <span class="rail" id="rail" aria-hidden="true"></span><span class="fill" id="fill" aria-hidden="true"></span>
+      <li class="step"><span class="node"></span><h3>Exposure</h3><code>ec2:i-09a8f</code><p>An internet-facing instance runs IMDSv1, which exposes an SSRF vector.</p></li>
+      <li class="step"><span class="node"></span><h3>Pivot</h3><code>Role/ProdDataPipeline</code><p>The instance assumes a role that two separate attack paths already share.</p></li>
+      <li class="step"><span class="node"></span><h3>Crown jewel</h3><code>s3:prod-fin-ledger</code><p>The role can write to the finance ledger. Blast radius: 14 downstream assets.</p></li>
+      <li class="step"><span class="node"><b id="ring"></b></span><h3>Severance</h3><code>iam:PassRole</code><p>FaridEx scopes the wildcard to one ARN. Both paths close once a human approves the diff.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="caps" aria-label="What FaridEx does">
+  <div class="wrap">
+    <div class="cap grid" data-g><h3 data-r>Exploitable attack paths</h3><p data-r>Yen’s k-shortest paths over <code>sts:AssumeRole</code> and <code>iam:PassRole</code> edges rank the routes an attacker would take.</p></div>
+    <div class="cap grid" data-g><h3 data-r>Native MCP server</h3><p data-r>Query the live security graph from Claude Desktop, Cursor, or your own agents over JSON-RPC.</p></div>
+    <div class="cap grid" data-g><h3 data-r>Reviewable remediation</h3><p data-r>AI drafts each diff. You read it, approve it, and the decision is written to an audit log.</p></div>
+  </div>
+</section>
+
+<section class="notify" id="notify-section">
+  <div class="wrap grid" data-g>
+    <h2 data-r>One email when FaridEx opens.</h2>
+    <form id="notify" data-r novalidate>
+      <input type="email" id="email" name="email" placeholder="you@company.com" autocomplete="email" aria-label="Email address" required>
+      <button type="submit">Notify me</button>
+      <p class="note" id="note" role="status" aria-live="polite">No newsletter. No second email.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 FaridSec</span>
+    <a id="contact" href="mailto:contact@faridsec.com">contact@faridsec.com</a>
+  </div>
+</footer>
+
+<script>
+/* ---- settings ---- */
+const CONTACT = "contact@faridsec.com";
+const FORM_ENDPOINT = "https://faridex-notify.devsecop3.workers.dev";
+
+/* ---- notify form ---- */
+const form = document.getElementById("notify"), input = document.getElementById("email"), note = document.getElementById("note");
+const say = (t, c) => { note.textContent = t; note.className = "note " + (c || ""); };
+document.getElementById("contact").href = "mailto:" + CONTACT;
+document.getElementById("contact").textContent = CONTACT;
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!input.checkValidity()) { say("Enter a valid email address.", "err"); input.focus(); return; }
+  const email = input.value.trim(), btn = form.querySelector("button");
+  if (FORM_ENDPOINT) {
+    try {
+      btn.disabled = true; say("Adding you to the list…");
+      const r = await fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ email }) });
+      if (!r.ok) throw new Error();
+      say("You’re on the list. We’ll email you at launch.", "ok"); form.reset();
+    } catch { say("That didn’t send. Try again, or email " + CONTACT + ".", "err"); }
+    finally { btn.disabled = false; }
+  } else {
+    location.href = "mailto:" + CONTACT + "?subject=" + encodeURIComponent("Notify me at launch") + "&body=" + encodeURIComponent("Please notify " + email + " when FaridEx launches.");
+    say("Your email app should open to send the request.", "ok");
+  }
+});
+</script>
+
+<script type="module">
+import { animate, inView, scroll, stagger } from "https://cdn.jsdelivr.net/npm/motion@11.18.2/+esm";
+
+const root = document.documentElement;
+if (root.classList.contains("mo")) {
+  clearTimeout(window.__mo);
+  const $ = (s, c = document) => [...c.querySelectorAll(s)];
+  const EASE = [.22, 1, .36, 1];
+  const reveal = (els, startDelay = 0) =>
+    animate(els, { opacity: [0, 1], y: [20, 0] }, { duration: .9, ease: EASE, delay: stagger(.1, { startDelay }) });
+
+  /* 1. Page load: headline words rise out of a mask, then the rest settles in. */
+  animate(".w i", { y: ["108%", "0%"] }, { duration: 1.1, ease: EASE, delay: stagger(.06, { startDelay: .15 }) });
+  reveal($(".hero [data-r]"), .75);
+
+  /* 2. Sections reveal once, staggered, as they enter the viewport. */
+  inView("[data-g]", ({ target }) => { reveal($("[data-r]", target)); }, { margin: "0px 0px -12% 0px" });
+
+  /* 3. Hero eases away as you scroll past it. */
+  const hc = document.getElementById("hc");
+  scroll(p => { hc.style.opacity = Math.max(0, 1 - p * 1.4); hc.style.transform = `translateY(${p * -48}px)`; },
+         { target: document.querySelector(".hero"), offset: ["start start", "end start"] });
+
+  /* 4. The path draws with scroll. Each node lights as the line reaches it. */
+  const track = document.getElementById("track"), rail = document.getElementById("rail"), fill = document.getElementById("fill");
+  const steps = $(".step"), ring = document.getElementById("ring");
+  let th = [], lastP = 0;
+  const measure = () => {
+    const c = steps.map(s => { const n = s.querySelector(".node"); return s.offsetTop + n.offsetTop + n.offsetHeight / 2; });
+    const a = c[0], b = c[c.length - 1];
+    [rail, fill].forEach(el => { el.style.top = a + "px"; el.style.height = (b - a) + "px"; });
+    th = c.map(v => (v - a) / (b - a));
+    update(lastP);
+  };
+  const update = p => {
+    lastP = p; fill.style.transform = `scaleY(${p})`;
+    steps.forEach((s, i) => {
+      const on = p >= th[i] - .001;
+      if (on !== s.classList.contains("on")) {
+        s.classList.toggle("on", on);
+        if (on && i === steps.length - 1) animate(ring, { scale: [1, 3.2], opacity: [.7, 0] }, { duration: 1.3, ease: EASE });
+      }
+    });
+  };
+  measure();
+  addEventListener("resize", measure);
+  document.fonts && document.fonts.ready.then(measure);
+  scroll(update, { target: track, offset: ["start 65%", "end 55%"] });
+}
+</script>
+</body>
+</html>
