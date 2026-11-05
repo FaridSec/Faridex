@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
-  FaridSec — Personal Portfolio, Products, Write-ups & CV
-  Architecture: 8B Single-File System (@layer tokens, base, atoms, layout, sections, scenes)
+  FaridSec — Personal Portfolio, Products, Showcases, Badges, Write-ups & CV
+  Palette: High-Contrast Daylight Editorial (Inspired by 8B Refactor, Spare Hour & Onda)
   Motion Engine: GSAP 3.13 + ScrollTrigger + Lenis Smooth Scroll
 -->
 <html lang="en">
@@ -9,14 +9,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mohammed Farid — Cybersecurity Architect & Builder | FaridSec</title>
-<meta name="description" content="Portfolio of Mohammed Farid: Cybersecurity Architect, creator of FaridEx, cloud security researcher, certifications, write-ups, and projects.">
+<meta name="description" content="Portfolio of Mohammed Farid: Cybersecurity Architect, creator of FaridEx, 13+ verified badges, cloud security showcases, write-ups, and projects.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Mohammed Farid — Cybersecurity Architect | FaridSec">
 <meta property="og:description" content="Cloud security architecture, IAM attack path analysis, certifications, write-ups, and engineering showcases.">
 <meta property="og:image" content="https://faridsec.com/logo.png">
 <meta property="og:url" content="https://faridsec.com">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d0c11'/%3E%3Cpath d='M32 8c2 14 6 20 24 24-18 4-22 10-24 24-2-14-6-20-24-24 18-4 22-10 24-24z' fill='%23556EEE'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23556EEE'/%3E%3Cpath d='M32 8c2 14 6 20 24 24-18 4-22 10-24 24-2-14-6-20-24-24 18-4 22-10 24-24z' fill='%23ffffff'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,27 +29,41 @@
 <style data-part="tokens">
 @layer tokens {
 :root {
-  --color-1: #0b0b0f;       /* Deep Obsidian Background */
-  --color-2: #f4f4f8;       /* Crisp White Text */
-  --color-3: #556EEE;       /* FaridSec Signature Cobalt */
-  --color-4: #8cf2e6;       /* Cyber Mint Accent */
-  --color-5: #f3c03e;       /* Amber Gold Badge Accent */
-  --color-6: #ff5b1f;       /* Signal Orange Accent */
-  --color-7: #b8a4f7;       /* Soft Violet Accent */
-  --color-surface: #15151e; /* Card Dark Surface */
-  --color-surface-2: #1e1e2a;
-  --color-muted: #9ca3b8;
-  --color-line: rgba(244, 244, 248, 0.12);
+  /* High-Visibility Daylight Editorial Palette */
+  --bg-page: #f5f5f7;         /* Crisp Alabaster Page Background */
+  --bg-white: #ffffff;        /* Pure White Card Surface */
+  --bg-ice: #dde8ea;          /* Soft Ice-Teal Section Surface */
+  --bg-lavender: #efeef4;     /* Soft Lavender Section Surface */
+  --ink: #12121a;             /* Deep Charcoal-Black Primary Text */
+  --ink-muted: #525563;       /* High-Contrast Slate Muted Text */
+  --line: #d8dae3;            /* Crisp Structural Hairline */
+  --line-strong: #12121a;
+
+  /* Vibrant 8B Accent Colors */
+  --cobalt: #556EEE;          /* FaridSec Signature Cobalt */
+  --violet: #6c3cff;          /* Onda Electric Violet */
+  --amber: #f3c03e;           /* Spare Hour Warm Amber */
+  --coral: #ff6a21;           /* Cut Short / Spare Hour Coral Orange */
+  --crimson: #c93418;         /* Refactor Brick Red */
+  --sky: #3a96e0;             /* Spare Hour Sky Blue */
+  --mint: #a6dcb4;            /* Spare Hour Mint Green */
+  --forest: #187a44;          /* Spare Hour Emerald */
+  --teal: #0d5c4c;            /* Deep Teal Surface */
+  --plum: #2a2137;            /* Refactor Deep Plum */
 
   --font-display: "Syne", "Arial Black", sans-serif;
   --font-sans: "Host Grotesk", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
-  --radius-1: 28px;
-  --radius-2: 18px;
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
   --radius-pill: 999px;
-  --space-1: clamp(16px, 3.6vw, 52px);
-  --space-2: clamp(88px, 12vw, 160px);
+
+  --space-edge: clamp(16px, 3.8vw, 56px);
+  --space-sec: clamp(84px, 11vw, 150px);
+  --shadow-card: 0 12px 36px rgba(18, 18, 26, 0.06);
+  --shadow-stack: 0 -14px 40px rgba(18, 18, 26, 0.12);
 }
 }
 </style>
@@ -57,17 +71,17 @@
 <style data-part="base">
 @layer base {
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; background: var(--color-1); color-scheme: dark; }
+html { -webkit-text-size-adjust: 100%; background: var(--bg-page); color: var(--ink); }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: clip; }
 body {
   margin: 0;
-  background: var(--color-1);
-  color: var(--color-2);
+  background: var(--bg-page);
+  color: var(--ink);
   font-family: var(--font-sans);
   font-size: 17px;
-  line-height: 1.55;
+  line-height: 1.58;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
@@ -77,380 +91,536 @@ img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; border: 0; background: none; }
-:focus-visible { outline: 2px solid var(--color-3); outline-offset: 4px; }
+:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; }
 }
 </style>
 
 <style data-part="atoms">
 @layer atoms {
-.m-display-xl { font-family: var(--font-display); font-size: clamp(44px, 8.2vw, 132px); font-weight: 800; line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; }
-.m-display-lg { font-family: var(--font-display); font-size: clamp(32px, 4.8vw, 72px); font-weight: 700; line-height: 0.96; letter-spacing: -0.03em; }
-.m-display-md { font-family: var(--font-sans); font-size: clamp(22px, 2.2vw, 32px); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
-.m-body-lg { font-family: var(--font-sans); font-size: clamp(18px, 1.5vw, 22px); font-weight: 400; line-height: 1.45; color: var(--color-muted); }
-.m-mono { font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
-.m-dot { display: inline-block; width: 0.18em; height: 0.18em; margin-left: 0.06em; border-radius: 50%; background: var(--color-3); vertical-align: baseline; }
+.t-display-xl { font-family: var(--font-display); font-size: clamp(42px, 7.6vw, 118px); font-weight: 800; line-height: 0.92; letter-spacing: -0.04em; text-transform: uppercase; }
+.t-display-lg { font-family: var(--font-display); font-size: clamp(32px, 4.5vw, 68px); font-weight: 800; line-height: 0.98; letter-spacing: -0.03em; }
+.t-display-md { font-family: var(--font-sans); font-size: clamp(22px, 2.2vw, 32px); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
+.t-body-lg { font-family: var(--font-sans); font-size: clamp(18px, 1.45vw, 21px); font-weight: 400; line-height: 1.5; color: var(--ink-muted); }
+.t-mono { font-family: var(--font-mono); font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.m-dot { display: inline-block; width: 0.18em; height: 0.18em; margin-left: 0.06em; border-radius: 50%; background: var(--cobalt); vertical-align: baseline; }
 
-/* Buttons with 8B Skew Hover Fill */
+/* Highlighter Mark (from Spare Hour) */
+.m-mark {
+  padding: 0 0.16em; margin: 0 -0.16em;
+  background-image: linear-gradient(rgba(243, 192, 62, 0.65), rgba(243, 192, 62, 0.65));
+  background-repeat: no-repeat; background-position: 0 80%; background-size: 100% 0.58em;
+}
+
+/* Primary Skew Button (from Refactor) */
 .m-btn {
   position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  min-height: 50px; padding: 0 26px; border-radius: var(--radius-pill);
-  background: var(--color-3); color: var(--color-2); font-weight: 600; font-size: 15px;
+  min-height: 52px; padding: 0 28px; border-radius: var(--radius-pill);
+  background: var(--ink); color: var(--bg-white); font-weight: 600; font-size: 15px;
   overflow: hidden; isolation: isolate; transition: color 0.35s ease;
 }
 .m-btn::before {
   content: ""; position: absolute; inset: -2px -30%; z-index: -1;
-  background: var(--color-2); transform: translateX(-105%) skewX(-24deg);
+  background: var(--cobalt); transform: translateX(-105%) skewX(-24deg);
   transition: transform 0.5s cubic-bezier(0.65, 0, 0.2, 1);
 }
 @media (hover: hover) {
-  .m-btn:hover { color: var(--color-1); }
+  .m-btn:hover { color: var(--bg-white); }
   .m-btn:hover::before { transform: translateX(0) skewX(-24deg); }
 }
 
 .m-btn-outline {
   position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  min-height: 48px; padding: 0 24px; border-radius: var(--radius-pill);
-  border: 1.5px solid var(--color-line); background: transparent; color: var(--color-2);
-  font-weight: 600; font-size: 15px; overflow: hidden; isolation: isolate; transition: color 0.35s, border-color 0.35s;
+  min-height: 50px; padding: 0 26px; border-radius: var(--radius-pill);
+  border: 2px solid var(--ink); background: transparent; color: var(--ink);
+  font-weight: 600; font-size: 15px; overflow: hidden; isolation: isolate; transition: color 0.35s;
 }
 .m-btn-outline::before {
   content: ""; position: absolute; inset: -2px -30%; z-index: -1;
-  background: var(--color-3); transform: translateX(-105%) skewX(-24deg);
+  background: var(--ink); transform: translateX(-105%) skewX(-24deg);
   transition: transform 0.5s cubic-bezier(0.65, 0, 0.2, 1);
 }
 @media (hover: hover) {
-  .m-btn-outline:hover { border-color: var(--color-3); color: var(--color-2); }
+  .m-btn-outline:hover { color: var(--bg-white); }
   .m-btn-outline:hover::before { transform: translateX(0) skewX(-24deg); }
 }
 
 .m-badge {
-  display: inline-flex; align-items: center; gap: 6px; min-height: 30px; padding: 0 12px;
-  border-radius: var(--radius-pill); border: 1px solid var(--color-line);
-  background: rgba(255, 255, 255, 0.04); font-family: var(--font-mono); font-size: 12px;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 14px;
+  border-radius: var(--radius-pill); border: 1.5px solid var(--ink);
+  background: var(--bg-white); color: var(--ink); font-family: var(--font-mono); font-size: 12px; font-weight: 600;
 }
 
-.m-surface { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-1); }
-.m-surface-light { background: var(--color-2); color: var(--color-1); border-radius: var(--radius-1); }
-
-/* 3D Perspective Window (from Halide) */
-.m-window { perspective: 1100px; }
-.m-window__pane {
-  --turn: -16deg; position: relative; height: 100%; border-radius: var(--radius-2);
-  overflow: hidden; transform: rotateY(var(--turn)); background: var(--color-surface-2);
-  border: 1px solid var(--color-line);
-}
-.m-window__pane img { width: 100%; height: 100%; object-fit: cover; }
-
-/* Ruled divider line */
-.ruled { position: relative; }
-.ruled::before {
-  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px;
-  background: var(--color-line); transform-origin: left; transform: scaleX(var(--rule, 1));
-}
+/* 5-Square Pixel Glyph (from Refactor) */
+.m-glyph { --size: 36px; position: relative; display: inline-block; flex: none; width: var(--size); height: var(--size); }
+.m-glyph i { position: absolute; width: 33.4%; height: 33.4%; border-radius: 3px; }
+.m-glyph i:nth-child(1) { left: 0; top: 0; background: var(--plum); }
+.m-glyph i:nth-child(2) { left: 66.6%; top: 0; background: var(--coral); }
+.m-glyph i:nth-child(3) { left: 33.3%; top: 33.3%; background: var(--cobalt); }
+.m-glyph i:nth-child(4) { left: 66.6%; top: 33.3%; background: var(--amber); }
+.m-glyph i:nth-child(5) { left: 33.3%; top: 66.6%; background: var(--forest); }
 }
 </style>
 
 <style data-part="layout">
 @layer layout {
-.wrap { width: min(100%, 1380px); margin-inline: auto; padding-inline: var(--space-1); }
-.section-pad { padding-block: var(--space-2); }
-.section-head { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px 64px; align-items: end; margin-bottom: clamp(44px, 6vw, 80px); }
-@media (max-width: 900px) { .section-head { grid-template-columns: 1fr; } }
+.wrap { width: min(100%, 1400px); margin-inline: auto; padding-inline: var(--space-edge); }
+.sec-pad { padding-block: var(--space-sec); }
+.sec-head {
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 24px 64px; align-items: end; margin-bottom: clamp(44px, 6vw, 76px);
+}
+.sec-tag { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; color: var(--cobalt); }
+@media (max-width: 900px) { .sec-head { grid-template-columns: 1fr; } }
 }
 </style>
 
 <style data-part="sections">
 @layer sections {
-/* 1. NAVIGATION */
+/* 1. FLOATING DAYLIGHT NAVIGATION */
 #site-nav {
-  position: fixed; z-index: 50; top: 18px; left: var(--space-1); right: var(--space-1);
+  position: fixed; z-index: 50; top: 16px; left: var(--space-edge); right: var(--space-edge);
   transition: transform 0.45s cubic-bezier(0.6, 0, 0.2, 1);
 }
 #site-nav.is-hidden { transform: translateY(-140%); }
 #site-nav .nav__bar {
-  display: flex; align-items: center; justify-content: space-between; gap: 20px;
-  height: 64px; padding: 0 12px 0 22px; border-radius: var(--radius-pill);
-  background: rgba(21, 21, 30, 0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--color-line);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  height: 68px; padding: 0 12px 0 22px; border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--line); box-shadow: var(--shadow-card);
 }
-#site-nav .nav__brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 800; font-size: 20px; letter-spacing: -0.03em; }
-#site-nav .nav__star { width: 22px; height: 22px; fill: var(--color-3); transition: transform 0.6s ease; }
-#site-nav .nav__brand:hover .nav__star { transform: rotate(90deg); }
-#site-nav .nav__links { display: flex; gap: clamp(16px, 2.2vw, 32px); font-size: 15px; font-weight: 500; color: var(--color-muted); }
-#site-nav .nav__links a:hover { color: var(--color-2); }
-#site-nav .nav__menu-btn { display: none; padding: 8px 16px; border-radius: var(--radius-pill); border: 1px solid var(--color-line); font-size: 14px; }
+#site-nav .nav__brand { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 800; font-size: 21px; letter-spacing: -0.03em; }
+#site-nav .nav__links { display: flex; flex-wrap: wrap; gap: clamp(14px, 1.8vw, 26px); font-size: 14.5px; font-weight: 600; color: var(--ink-muted); }
+#site-nav .nav__links a:hover { color: var(--cobalt); }
+#site-nav .nav__menu-btn { display: none; padding: 10px 18px; border-radius: var(--radius-pill); border: 1.5px solid var(--ink); font-weight: 600; font-size: 14px; }
 #site-nav .nav__overlay {
   position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; justify-content: space-between;
-  padding: 28px var(--space-1); background: var(--color-1);
+  padding: 28px var(--space-edge); background: var(--amber); color: var(--ink); overflow-y: auto;
 }
 #site-nav .nav__overlay[hidden] { display: none; }
-#site-nav .nav__overlay-links { display: grid; gap: 12px; font-family: var(--font-display); font-size: clamp(32px, 8vw, 56px); font-weight: 800; }
-@media (max-width: 1024px) {
+#site-nav .nav__overlay-links { display: grid; gap: 8px; font-family: var(--font-display); font-size: clamp(28px, 6vw, 46px); font-weight: 800; }
+@media (max-width: 1120px) {
   #site-nav .nav__links, #site-nav .nav__cta { display: none; }
   #site-nav .nav__menu-btn { display: inline-flex; }
 }
 
-/* 2. HERO & MANIFESTO */
-#hero { padding-top: clamp(110px, 15svh, 150px); padding-bottom: var(--space-2); }
-#hero .hero__grid { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 40px; align-items: center; margin-top: 36px; }
-#hero .hero__meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
-#hero .hero__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
-#hero .hero__portrait { aspect-ratio: 4 / 4.6; max-height: 520px; }
-#hero .hero__quick {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 56px;
+/* 2. HERO (Refactor Multi-Plane + Spare Hour Spinning Badge) */
+#hero { padding-top: clamp(108px, 14svh, 140px); padding-bottom: var(--space-sec); }
+#hero .hero__top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
+#hero .hero__ring-badge {
+  position: relative; width: 104px; height: 104px; flex: none; display: grid; place-items: center;
 }
-#hero .hero__stat { padding: 22px 24px; display: grid; gap: 6px; }
-#hero .hero__stat-val { font-family: var(--font-display); font-size: clamp(28px, 3vw, 44px); font-weight: 800; color: var(--color-3); }
-@media (max-width: 900px) {
-  #hero .hero__grid { grid-template-columns: 1fr; }
-  #hero .hero__quick { grid-template-columns: 1fr 1fr; }
-}
+#hero .hero__ring-svg { width: 100%; height: 100%; animation: spin-slow 14s linear infinite; fill: var(--ink); font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; }
+#hero .hero__ring-center { position: absolute; width: 42px; height: 42px; border-radius: 50%; background: var(--cobalt); color: var(--bg-white); display: grid; place-items: center; font-weight: 800; }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
 
-/* Manifesto word-by-word illumination */
-#manifesto { padding-block: calc(var(--space-2) * 0.7); border-top: 1px solid var(--color-line); border-bottom: 1px solid var(--color-line); }
-#manifesto .mf__grid { display: grid; grid-template-columns: 220px 1fr; gap: 32px; align-items: start; }
-#manifesto .mf__text { font-family: var(--font-sans); font-size: clamp(26px, 3.6vw, 52px); font-weight: 600; line-height: 1.15; letter-spacing: -0.025em; }
-#manifesto .mf__text .word { color: rgba(244, 244, 248, 0.2); transition: color 0.2s; }
-@media (max-width: 760px) { #manifesto .mf__grid { grid-template-columns: 1fr; } }
+#hero .hero__board {
+  display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 20px; margin-top: 24px;
+}
+#hero .hero__main-card {
+  position: relative; padding: clamp(28px, 4vw, 56px); border-radius: var(--radius-xl);
+  background: linear-gradient(145deg, var(--plum) 0%, #191422 100%); color: var(--bg-white);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 32px; overflow: hidden;
+}
+#hero .hero__main-card::after {
+  content: ""; position: absolute; right: -60px; top: -60px; width: 240px; height: 240px;
+  border-radius: 50%; background: radial-gradient(circle, var(--cobalt), transparent 70%); opacity: 0.45; pointer-events: none;
+}
+#hero .hero__side-stack { display: grid; grid-template-rows: 1fr auto; gap: 20px; }
+#hero .hero__visual-card {
+  border-radius: var(--radius-xl); background: linear-gradient(145deg, var(--amber), var(--coral));
+  padding: 28px; display: grid; place-items: center; position: relative; overflow: hidden; min-height: 260px;
+}
+#hero .hero__visual-card img { max-height: 180px; width: auto; object-fit: contain; filter: drop-shadow(0 12px 24px rgba(0,0,0,0.25)); }
+#hero .hero__stats-card {
+  border-radius: var(--radius-xl); background: var(--bg-ice); padding: 28px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 18px; border: 1.5px solid var(--line);
+}
+#hero .stat-num { font-family: var(--font-display); font-size: clamp(28px, 3vw, 42px); font-weight: 800; color: var(--ink); line-height: 1; }
+@media (max-width: 900px) { #hero .hero__board { grid-template-columns: 1fr; } }
 
-/* 3. PRODUCTS & SHOWCASES (Sticky Stacking Deck) */
-#products .prod-stack { display: grid; gap: 40px; }
-#products .prod-card {
-  position: sticky; top: 96px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px;
-  min-height: min(74svh, 620px); padding: clamp(24px, 3.5vw, 48px);
-  border-radius: var(--radius-1); border: 1px solid var(--color-line);
-  background: linear-gradient(145deg, #161829 0%, #0e101a 100%);
-  transform-origin: 50% 0%; overflow: hidden;
-}
-#products .prod-card--2 { background: linear-gradient(145deg, #1d162b 0%, #110d1a 100%); top: 112px; }
-#products .prod-card--3 { background: linear-gradient(145deg, #122226 0%, #0b1417 100%); top: 128px; }
-#products .prod-card__copy { display: flex; flex-direction: column; justify-content: space-between; gap: 24px; }
-#products .prod-card__tags { display: flex; flex-wrap: wrap; gap: 8px; }
-#products .prod-card__visual {
-  position: relative; border-radius: var(--radius-2); overflow: hidden;
-  background: #090a0f; border: 1px solid var(--color-line); display: grid; place-items: center; min-height: 280px;
-}
-#products .prod-card__visual img { width: 100%; height: 100%; object-fit: cover; }
-@media (max-width: 900px) {
-  #products .prod-card { grid-template-columns: 1fr; position: relative; top: auto !important; }
-}
+/* 3. MANIFESTO (Cut Short Word-by-Word Scroll Illumination) */
+#manifesto { background: var(--bg-white); border-block: 1.5px solid var(--line); padding-block: calc(var(--space-sec) * 0.75); }
+#manifesto .mf__grid { display: grid; grid-template-columns: 260px 1fr; gap: 32px; align-items: start; }
+#manifesto .mf__statement { font-family: var(--font-sans); font-size: clamp(26px, 3.5vw, 50px); font-weight: 700; line-height: 1.16; letter-spacing: -0.025em; }
+#manifesto .mf__statement .w { color: #c5c8d4; transition: color 0.15s; }
+@media (max-width: 860px) { #manifesto .mf__grid { grid-template-columns: 1fr; } }
 
-/* 4. CERTIFICATIONS & BADGES (Credly Showcase Grid) */
-#certifications .cert-grid {
+/* 4. FLAGSHIP PRODUCTS (Dedicated Section) */
+#products .prod-feature {
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 36px; padding: clamp(28px, 4vw, 56px);
+  border-radius: var(--radius-xl); background: var(--bg-white); border: 2px solid var(--ink);
+  box-shadow: var(--shadow-card); align-items: center;
+}
+#products .prod-feature__screen {
+  border-radius: var(--radius-lg); background: var(--plum); color: var(--bg-white);
+  padding: 36px; min-height: 360px; display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+#products .prod-feature__screen img { max-height: 160px; object-fit: contain; margin-block: auto; }
+@media (max-width: 900px) { #products .prod-feature { grid-template-columns: 1fr; } }
+
+/* 5. INTERACTIVE SHOWCASES (Refactor "Before -> After" Diff Rows) */
+#showcases { background: var(--bg-lavender); border-top: 1.5px solid var(--line); }
+#showcases .diff { border-top: 2px solid var(--ink); }
+#showcases .diff__row {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 0.85fr);
+  border-bottom: 1.5px solid var(--line); background: var(--bg-white); overflow: hidden;
+}
+#showcases .diff__old, #showcases .diff__new {
+  display: flex; align-items: center; gap: 16px; padding: 26px 28px; min-height: 108px;
+}
+#showcases .diff__old { background: #fbe9e5; color: #6e3a30; }
+#showcases .diff__role { position: relative; font-weight: 600; font-size: 18px; }
+#showcases .diff__strike {
+  position: absolute; left: -4px; right: -4px; top: 52%; height: 2.5px;
+  background: var(--crimson); transform-origin: 0 50%;
+}
+#showcases .diff__new { background: var(--bg-ice); color: var(--ink); font-weight: 700; font-size: 18px; }
+#showcases .diff__sign {
+  flex: none; width: 28px; height: 28px; border-radius: 6px; display: grid; place-items: center;
+  font-family: var(--font-mono); font-weight: 700; color: var(--bg-white); background: var(--crimson);
+}
+#showcases .diff__new .diff__sign { background: var(--forest); }
+#showcases .diff__impact { padding: 26px 28px; display: flex; flex-direction: column; justify-content: center; gap: 4px; background: var(--bg-white); }
+@media (max-width: 960px) { #showcases .diff__row { grid-template-columns: 1fr; } }
+
+/* 6. VERIFIED BADGES & CERTIFICATIONS (13 LARGE STICKY STACKING CARDS) */
+#badges { background: var(--bg-page); border-top: 1.5px solid var(--line); }
+#badges .badge-stack {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 18px;
+  gap: 36px;
+  padding-bottom: 60px;
 }
-#certifications .cert-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 18px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-2);
-  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-#certifications .cert-card:hover {
-  border-color: var(--color-3);
-  transform: translateY(-5px);
-  box-shadow: 0 14px 34px rgba(85, 110, 238, 0.14);
-}
-#certifications .cert-card__top {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-#certifications .cert-card__embed {
+#badges .badge-card {
+  position: sticky;
+  top: calc(86px + var(--stack-i, 0) * 10px);
   display: grid;
-  place-items: center;
-  width: 100%;
-  padding: 10px 6px;
-  border-radius: 14px;
-  background: #ffffff;
-  color: #0b0b0f;
-  min-height: 286px;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 36px;
+  align-items: center;
+  min-height: 430px;
+  padding: clamp(24px, 3.6vw, 48px);
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-stack);
+  transform-origin: 50% 0%;
   overflow: hidden;
 }
+/* Alternating Bright 8B Card Surfaces for the 13 Stacked Cards */
+#badges .badge-card:nth-child(6n+1) { background: var(--bg-white); color: var(--ink); }
+#badges .badge-card:nth-child(6n+2) { background: var(--amber); color: var(--ink); }
+#badges .badge-card:nth-child(6n+3) { background: var(--bg-ice); color: var(--ink); }
+#badges .badge-card:nth-child(6n+4) { background: var(--mint); color: var(--ink); }
+#badges .badge-card:nth-child(6n+5) { background: #e8e0ff; color: var(--ink); }
+#badges .badge-card:nth-child(6n+6) { background: #ffe3d3; color: var(--ink); }
 
-/* 5. PROJECTS & CASE STUDIES (Pinned Horizontal Track) */
-#projects { background: var(--color-surface); border-block: 1px solid var(--color-line); }
-#projects .proj__stage { padding-block: var(--space-2); }
+#badges .badge-card__info {
+  display: flex; flex-direction: column; justify-content: space-between; gap: 24px; height: 100%;
+}
+#badges .badge-card__num {
+  font-family: var(--font-display); font-size: clamp(44px, 5.5vw, 76px); font-weight: 800;
+  line-height: 0.9; letter-spacing: -0.04em; opacity: 0.9;
+}
+#badges .badge-card__stage {
+  background: var(--bg-white);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-lg);
+  padding: 28px 20px;
+  min-height: 350px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+/* Scale up the Credly iframe so every badge is BIG and crystal clear */
+#badges .badge-card__embed-scale {
+  transform: scale(1.22);
+  transform-origin: center center;
+  display: grid;
+  place-items: center;
+  min-height: 280px;
+}
+@media (max-width: 860px) {
+  #badges .badge-card {
+    grid-template-columns: 1fr;
+    top: calc(78px + var(--stack-i, 0) * 6px);
+    padding: 22px;
+    gap: 20px;
+  }
+  #badges .badge-card__stage { min-height: 320px; }
+  #badges .badge-card__embed-scale { transform: scale(1.12); }
+}
+
+/* 7. PROJECTS (Refactor Pinned Horizontal Track + 24-Week Progress Bar) */
+#projects { background: var(--plum); color: var(--bg-white); }
+#projects .proj__stage { padding-block: var(--space-sec); }
 #projects.is-pinned .proj__stage {
-  height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 32px;
-  padding-block: 48px; overflow: hidden;
+  height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 28px;
+  padding-block: 44px; overflow: hidden;
 }
 #projects .proj__track {
-  display: flex; gap: 24px; padding-inline: var(--space-1); width: max-content;
+  display: flex; gap: 24px; padding-inline: var(--space-edge); width: max-content;
 }
 #projects:not(.is-pinned) .proj__track {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); width: 100%;
 }
-#projects .proj-item {
-  width: min(76vw, 760px); display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
-  padding: 28px; border-radius: var(--radius-1); background: var(--color-1); border: 1px solid var(--color-line);
+#projects .mod-card {
+  width: min(74vw, 820px); min-height: 400px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px;
+  padding: 32px; border-radius: var(--radius-xl); color: var(--ink); background: var(--amber);
+  border: 2px solid var(--ink); align-items: stretch;
 }
-#projects:not(.is-pinned) .proj-item { width: 100%; grid-template-columns: 1fr; }
-#projects .proj-item__img { border-radius: var(--radius-2); overflow: hidden; aspect-ratio: 16 / 11; background: var(--color-surface-2); display: grid; place-items: center; }
-#projects .proj-item__img img { width: 100%; height: 100%; object-fit: cover; }
-#projects .proj-item__body { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
-#projects .proj__progress { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; margin-top: 8px; }
-#projects .proj__sq { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.1); overflow: hidden; position: relative; }
-#projects .proj__sq::after { content: ""; position: absolute; inset: 0; background: var(--color-3); transform: scaleX(var(--fill, 0)); transform-origin: left; }
-@media (max-width: 860px) {
-  #projects .proj-item { grid-template-columns: 1fr; width: 85vw; }
+#projects .mod-card--2 { background: var(--bg-ice); }
+#projects .mod-card--3 { background: var(--mint); }
+#projects .mod-card--4 { background: #ffd8c4; }
+#projects:not(.is-pinned) .mod-card { width: 100%; grid-template-columns: 1fr; }
+#projects .mod-card__copy { display: flex; flex-direction: column; justify-content: space-between; gap: 20px; }
+#projects .mod-card__visual {
+  border-radius: var(--radius-lg); background: var(--ink); color: var(--bg-white);
+  padding: 24px; display: grid; place-items: center; text-align: center;
 }
+#projects .weeks-bar { display: grid; grid-template-columns: repeat(24, 1fr); gap: 6px; margin-top: 12px; }
+#projects .weeks-bar li {
+  aspect-ratio: 1; border-radius: 4px; border: 1px solid rgba(255,255,255,0.3); position: relative; overflow: hidden;
+}
+#projects .weeks-bar li::after {
+  content: ""; position: absolute; inset: 0; background: var(--amber); transform: scale(var(--fill, 0));
+}
+@media (max-width: 860px) { #projects .mod-card { grid-template-columns: 1fr; width: 86vw; } }
 
-/* 6. WRITE-UPS & RESEARCH (Sticky Split Viewer) */
-#writeups .wu__body { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: start; }
+/* 8. TECHNICAL WRITE-UPS (Sticky Split Viewer) */
+#writeups { background: var(--bg-white); border-bottom: 1.5px solid var(--line); }
+#writeups .wu__grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: start; }
 #writeups .wu__viewer {
-  position: sticky; top: 120px; aspect-ratio: 4 / 3.2; border-radius: var(--radius-1);
-  overflow: hidden; background: var(--color-surface); border: 1px solid var(--color-line);
+  position: sticky; top: 110px; aspect-ratio: 4 / 3.3; border-radius: var(--radius-xl);
+  border: 2px solid var(--ink); overflow: hidden; background: var(--plum);
 }
-#writeups .wu__shot {
-  position: absolute; inset: 0; display: grid; place-items: center; padding: 32px;
-  background: radial-gradient(circle at 30% 30%, rgba(85, 110, 238, 0.22), var(--color-surface) 75%);
-  opacity: 0; transition: opacity 0.45s ease;
+#writeups .wu__slide {
+  position: absolute; inset: 0; padding: 36px; display: flex; flex-direction: column; justify-content: space-between;
+  color: var(--bg-white); opacity: 0; transition: opacity 0.4s ease;
 }
-#writeups .wu__shot.is-active { opacity: 1; z-index: 2; }
-#writeups .wu__shot-label { position: relative; z-index: 2; padding: 12px 20px; border-radius: var(--radius-pill); background: rgba(11,11,15,0.9); border: 1px solid var(--color-3); }
-#writeups .wu__list { display: grid; gap: 16px; }
-#writeups .wu__row {
-  display: grid; gap: 12px; padding: 28px; border-radius: var(--radius-2);
-  background: var(--color-surface); border: 1px solid var(--color-line);
-  transition: border-color 0.3s, background-color 0.3s;
+#writeups .wu__slide--1 { background: linear-gradient(145deg, var(--cobalt), var(--plum)); }
+#writeups .wu__slide--2 { background: linear-gradient(145deg, var(--teal), #072e26); }
+#writeups .wu__slide--3 { background: linear-gradient(145deg, var(--coral), var(--crimson)); }
+#writeups .wu__slide.is-active { opacity: 1; z-index: 2; }
+#writeups .wu__list { display: grid; gap: 20px; }
+#writeups .wu__item {
+  padding: 32px; border-radius: var(--radius-lg); background: var(--bg-page);
+  border: 2px solid var(--line); transition: border-color 0.3s, background-color 0.3s, transform 0.3s;
+  display: grid; gap: 12px;
 }
-#writeups .wu__row.is-active, #writeups .wu__row:hover { border-color: var(--color-3); background: var(--color-surface-2); }
-#writeups .wu__meta { display: flex; justify-content: space-between; align-items: center; color: var(--color-muted); }
-@media (max-width: 900px) {
-  #writeups .wu__body { grid-template-columns: 1fr; }
-  #writeups .wu__viewer { display: none; }
+#writeups .wu__item.is-active, #writeups .wu__item:hover {
+  border-color: var(--ink); background: var(--bg-white); transform: translateY(-3px); box-shadow: var(--shadow-card);
 }
+@media (max-width: 900px) { #writeups .wu__grid { grid-template-columns: 1fr; } #writeups .wu__viewer { display: none; } }
 
-/* 7. EXPERIENCE, EDUCATION & VOLUNTEERING */
-#experience .exp-list { border-top: 1px solid var(--color-line); }
+/* 9. PROFESSIONAL EXPERIENCE (Dedicated Section) */
+#experience { background: var(--bg-page); }
+#experience .exp-table { border-top: 2px solid var(--ink); }
 #experience .exp-row {
-  display: grid; grid-template-columns: 180px 1.1fr 1.4fr; gap: 28px; align-items: baseline;
-  padding: 28px 0; border-bottom: 1px solid var(--color-line);
+  display: grid; grid-template-columns: 200px 1.1fr 1.4fr; gap: 28px; align-items: baseline;
+  padding: 32px 24px; border-bottom: 1.5px solid var(--line); background: var(--bg-white);
+  margin-top: 12px; border-radius: var(--radius-md); border: 1.5px solid var(--line);
 }
-@media (max-width: 860px) { #experience .exp-row { grid-template-columns: 1fr; gap: 10px; } }
+@media (max-width: 860px) { #experience .exp-row { grid-template-columns: 1fr; gap: 12px; } }
 
-/* 8. SKILLS, LANGUAGES, INTERESTS & HOBBIES (Lighting Pill Matrix) */
-#skills { background: var(--color-surface); border-top: 1px solid var(--color-line); }
-#skills .sk-groups { display: grid; gap: 40px; }
-#skills .sk-group { display: grid; gap: 16px; }
-#skills .sk-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+/* 10. EDUCATION & ACADEMIC FOUNDATION (Dedicated Dealt-Out Cards Section) */
+#education { background: var(--bg-ice); border-block: 1.5px solid var(--line); }
+#education .edu-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+#education .edu-card {
+  background: var(--bg-white); border: 2px solid var(--ink); border-radius: var(--radius-xl);
+  overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-card);
+}
+#education .edu-card__top { padding: 28px; background: var(--amber); border-bottom: 2px solid var(--ink); }
+#education .edu-card:nth-child(2) .edu-card__top { background: var(--mint); }
+#education .edu-card:nth-child(3) .edu-card__top { background: #dcd3ff; }
+#education .edu-card__body { padding: 28px; display: grid; gap: 14px; flex: 1; }
+@media (max-width: 900px) { #education .edu-cards { grid-template-columns: 1fr; } }
+
+/* 11. ACHIEVEMENTS, LABS & TRAINING (Linnea / Onda Sticky Dial Section) */
+#achievements { background: var(--bg-white); border-bottom: 1.5px solid var(--line); }
+#achievements .ach__grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 56px; align-items: start; }
+#achievements .ach__stage {
+  position: sticky; top: 110px; border-radius: var(--radius-xl); background: var(--bg-lavender);
+  border: 2px solid var(--ink); padding: 40px; display: grid; place-items: center; text-align: center; gap: 20px;
+}
+#achievements .ach__ring-wrap { position: relative; width: min(100%, 260px); aspect-ratio: 1; display: grid; place-items: center; }
+#achievements .ach__svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+#achievements .ach__track { fill: none; stroke: var(--line); stroke-width: 10; }
+#achievements .ach__arc { fill: none; stroke: var(--cobalt); stroke-width: 10; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+#achievements .ach__center { position: absolute; display: grid; gap: 4px; }
+#achievements .ach__steps { display: grid; gap: 20px; }
+#achievements .ach__step {
+  padding: 32px; border-radius: var(--radius-lg); border: 2px solid var(--line); background: var(--bg-page);
+  display: grid; gap: 10px; transition: border-color 0.3s, background-color 0.3s;
+}
+#achievements .ach__step.is-active { border-color: var(--cobalt); background: var(--bg-white); box-shadow: var(--shadow-card); }
+@media (max-width: 900px) { #achievements .ach__grid { grid-template-columns: 1fr; } #achievements .ach__stage { position: static; } }
+
+/* 12. VOLUNTEERING & COMMUNITY (Spare Hour Stepped Skyline Cards) */
+#volunteering { background: var(--bg-page); border-bottom: 1.5px solid var(--line); }
+#volunteering .vol-skyline {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; align-items: end; min-height: 380px;
+}
+#volunteering .vol-card {
+  border-radius: var(--radius-xl); border: 2px solid var(--ink); padding: 32px 26px;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 20px;
+  box-shadow: var(--shadow-card);
+}
+#volunteering .vol-card:nth-child(1) { background: var(--amber); min-height: 360px; }
+#volunteering .vol-card:nth-child(2) { background: var(--mint); min-height: 310px; }
+#volunteering .vol-card:nth-child(3) { background: var(--bg-ice); min-height: 340px; }
+#volunteering .vol-card:nth-child(4) { background: #ffd8c4; min-height: 380px; }
+@media (max-width: 960px) { #volunteering .vol-skyline { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { #volunteering .vol-skyline { grid-template-columns: 1fr; } }
+
+/* 13. TECHNICAL SKILLS (Spare Hour Lighting-Up Street Pills) */
+#skills { background: var(--teal); color: var(--bg-white); }
+#skills .sk-cloud { display: flex; flex-wrap: wrap; gap: 12px; }
 #skills .sk-pill {
-  display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px;
-  border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: clamp(17px, 1.8vw, 24px);
-  font-weight: 600; border: 1px solid var(--color-line); background: var(--color-1);
-  opacity: 0.25; transform: translateY(12px) scale(0.95);
-  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s, background-color 0.3s;
+  display: inline-flex; align-items: flex-start; gap: 8px; padding: 12px 24px;
+  border-radius: var(--radius-pill); font-family: var(--font-sans); font-size: clamp(20px, 2.5vw, 36px);
+  font-weight: 700; line-height: 1.1; border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.4);
+  transform: translateY(10px) scale(0.95);
+  transition: all 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-#skills .sk-pill.is-lit { opacity: 1; transform: none; }
-#skills .sk-pill--sec.is-lit { border-color: var(--color-3); background: rgba(85, 110, 238, 0.14); }
-#skills .sk-pill--dev.is-lit { border-color: var(--color-4); background: rgba(140, 242, 230, 0.1); color: var(--color-4); }
-#skills .sk-pill--lang.is-lit { border-color: var(--color-5); background: rgba(243, 192, 62, 0.12); color: var(--color-5); }
-#skills .sk-pill--hobby.is-lit { border-color: var(--color-7); background: rgba(184, 164, 247, 0.12); color: var(--color-7); }
-#skills .sk-pill small { font-family: var(--font-mono); font-size: 11px; opacity: 0.75; text-transform: uppercase; }
+#skills .sk-pill small { font-family: var(--font-mono); font-size: 11px; margin-top: 4px; }
+#skills .sk-pill.is-lit { transform: none; color: var(--ink); border-color: var(--ink); }
+#skills .sk-pill--amber.is-lit { background: var(--amber); }
+#skills .sk-pill--mint.is-lit { background: var(--mint); }
+#skills .sk-pill--coral.is-lit { background: var(--coral); color: var(--bg-white); }
+#skills .sk-pill--sky.is-lit { background: var(--sky); color: var(--bg-white); }
+#skills .sk-pill--white.is-lit { background: var(--bg-white); }
 
-/* 9. CV TICKET STUB & CONTACT (Halide Tear-off Stub + Cloudflare Worker Form) */
+/* 14. SPOKEN LANGUAGES (Dedicated Section with Animated Bars) */
+#languages { background: var(--bg-white); border-bottom: 1.5px solid var(--line); }
+#languages .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+#languages .lang-card {
+  padding: 32px; border-radius: var(--radius-xl); border: 2px solid var(--ink); background: var(--bg-page);
+  display: grid; gap: 16px;
+}
+#languages .lang-bar { height: 12px; border-radius: var(--radius-pill); background: var(--line); overflow: hidden; position: relative; }
+#languages .lang-fill { position: absolute; inset: 0; background: var(--cobalt); transform-origin: left; transform: scaleX(var(--lang-scale, 1)); }
+@media (max-width: 760px) { #languages .lang-grid { grid-template-columns: 1fr; } }
+
+/* 15. INTERESTS & HOBBIES (Dedicated Collage Section) */
+#interests { background: var(--bg-lavender); border-bottom: 1.5px solid var(--line); }
+#interests .int-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+#interests .int-card {
+  padding: 28px; border-radius: var(--radius-xl); background: var(--bg-white);
+  border: 2px solid var(--ink); display: grid; gap: 14px; align-content: space-between; min-height: 220px;
+  box-shadow: var(--shadow-card);
+}
+#interests .int-card:nth-child(2) { background: var(--amber); }
+#interests .int-card:nth-child(4) { background: var(--mint); }
+@media (max-width: 960px) { #interests .int-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { #interests .int-grid { grid-template-columns: 1fr; } }
+
+/* 16. FAQ ACCORDION (Refactor / Spare Hour Details) */
+#faq { background: var(--bg-white); border-bottom: 1.5px solid var(--line); }
+#faq .faq__list { border-top: 2px solid var(--ink); }
+#faq .faq__item { border-bottom: 1.5px solid var(--line); }
+#faq .faq__item summary {
+  display: flex; justify-content: space-between; align-items: center; gap: 20px;
+  padding: 24px 0; cursor: pointer; list-style: none; font-size: clamp(19px, 2vw, 24px); font-weight: 700;
+}
+#faq .faq__item summary::-webkit-details-marker { display: none; }
+#faq .faq__icon {
+  width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--ink);
+  display: grid; place-items: center; font-weight: 700; transition: transform 0.35s, background-color 0.35s;
+}
+#faq .faq__item[open] .faq__icon { transform: rotate(45deg); background: var(--amber); }
+#faq .faq__ans { padding: 0 0 24px; color: var(--ink-muted); max-width: 68ch; }
+
+/* 17. CV TEAR-OFF TICKET & CONTACT FORM */
+#contact { background: var(--bg-page); }
 #contact .cv-ticket {
-  display: grid; grid-template-columns: 1.5fr 1fr; gap: 28px; margin-bottom: 64px; align-items: stretch;
+  display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; margin-bottom: 64px; align-items: stretch;
 }
 #contact .cv-sheet {
-  padding: clamp(28px, 3.5vw, 44px); border-radius: var(--radius-1);
-  background: var(--color-surface); border: 1px solid var(--color-line);
+  padding: clamp(28px, 3.6vw, 48px); border-radius: var(--radius-xl);
+  background: var(--bg-white); border: 2px solid var(--ink); box-shadow: var(--shadow-card);
   display: grid; gap: 20px; align-content: space-between;
 }
-#contact .cv-perks { display: grid; gap: 10px; }
-#contact .cv-perks li { padding-bottom: 10px; border-bottom: 1px solid var(--color-line); color: var(--color-muted); }
+#contact .cv-perks { display: grid; gap: 12px; }
+#contact .cv-perks li { padding-bottom: 12px; border-bottom: 1.5px solid var(--line); font-weight: 500; }
 #contact .cv-stub {
-  padding: clamp(28px, 3.5vw, 44px); border-radius: var(--radius-1);
-  background: var(--color-3); color: var(--color-2);
-  display: grid; align-content: space-between; gap: 24px;
-  border-left: 3px dashed rgba(11, 11, 15, 0.45);
-  transform-origin: 0% 100%;
+  padding: clamp(28px, 3.6vw, 48px); border-radius: var(--radius-xl);
+  background: var(--amber); color: var(--ink); border: 2px solid var(--ink);
+  border-left: 4px dashed var(--ink); box-shadow: var(--shadow-card);
+  display: grid; align-content: space-between; gap: 20px; transform-origin: 0% 100%;
 }
-#contact .contact-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: start; }
-#contact .contact-info { display: grid; gap: 24px; }
-#contact .contact-details { display: grid; border-top: 1px solid var(--color-line); }
-#contact .contact-details div {
-  display: grid; grid-template-columns: 120px 1fr; gap: 16px; padding: 16px 0;
-  border-bottom: 1px solid var(--color-line);
-}
-#contact .contact-form {
-  padding: clamp(24px, 3.5vw, 44px); display: grid; gap: 18px;
+#contact .contact-grid { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 48px; align-items: start; }
+#contact .contact-card {
+  background: var(--bg-white); border: 2px solid var(--ink); border-radius: var(--radius-xl);
+  padding: clamp(24px, 3.6vw, 44px); box-shadow: var(--shadow-card); display: grid; gap: 18px;
 }
 #contact .field { display: grid; gap: 6px; }
-#contact .field label { font-family: var(--font-mono); font-size: 12px; color: var(--color-muted); }
+#contact .field label { font-family: var(--font-mono); font-size: 12px; color: var(--ink); }
 #contact .field input, #contact .field select, #contact .field textarea {
-  width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--color-line);
-  background: var(--color-1); color: var(--color-2); font-size: 16px;
+  width: 100%; padding: 14px 16px; border-radius: 12px; border: 1.5px solid var(--ink);
+  background: var(--bg-page); color: var(--ink); font-size: 16px; font-weight: 500;
 }
 #contact .field input:focus, #contact .field select:focus, #contact .field textarea:focus {
-  outline: none; border-color: var(--color-3);
+  outline: none; border-color: var(--cobalt); background: var(--bg-white);
 }
-#contact .form-note { font-size: 14px; min-height: 1.4em; color: var(--color-muted); }
-#contact .form-note.ok { color: var(--color-4); }
-#contact .form-note.err { color: var(--color-6); }
-@media (max-width: 900px) {
-  #contact .cv-ticket, #contact .contact-grid { grid-template-columns: 1fr; }
-}
+#contact .form-note { font-size: 14px; font-weight: 600; min-height: 1.4em; }
+#contact .form-note.ok { color: var(--forest); }
+#contact .form-note.err { color: var(--crimson); }
+@media (max-width: 900px) { #contact .cv-ticket, #contact .contact-grid { grid-template-columns: 1fr; } }
 
 /* FOOTER */
-#site-footer {
-  padding: 64px 0 36px; border-top: 1px solid var(--color-line); color: var(--color-muted);
-}
+#site-footer { background: var(--ink); color: var(--bg-white); padding: 72px 0 36px; }
 #site-footer .foot__word {
-  font-family: var(--font-display); font-size: clamp(48px, 14.5vw, 210px); font-weight: 800;
-  line-height: 0.82; letter-spacing: -0.05em; color: var(--color-2); margin-block: 36px;
-  text-transform: uppercase; white-space: nowrap;
+  font-family: var(--font-display); font-size: clamp(44px, 14vw, 200px); font-weight: 800;
+  line-height: 0.84; letter-spacing: -0.05em; color: var(--amber); margin-block: 36px;
 }
-#site-footer .foot__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+#site-footer .foot__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: rgba(255,255,255,0.75); }
 }
 </style>
 </head>
 
 <body>
 
-<!-- 1. FLOATING NAVIGATION -->
+<!-- 1. FLOATING DAYLIGHT NAVIGATION -->
 <header id="site-nav">
   <div class="nav__bar">
     <a class="nav__brand" href="#hero">
-      <svg class="nav__star" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2c1.5 9 4.5 12.5 14 14-9.5 1.5-12.5 5-14 14-1.5-9-4.5-12.5-14-14 9.5-1.5 12.5-5 14-14z"/></svg>
+      <span class="m-glyph" style="--size:26px;" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
       <span>FARIDSEC</span>
     </a>
     <nav class="nav__links" aria-label="Main Navigation">
       <a href="#products">Products</a>
-      <a href="#certifications">Certifications</a>
+      <a href="#showcases">Showcases</a>
+      <a href="#badges">13 Badges</a>
       <a href="#projects">Projects</a>
       <a href="#writeups">Write-ups</a>
       <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
       <a href="#skills">Skills</a>
     </nav>
-    <a class="m-btn nav__cta" href="#contact"><span>Request CV / Contact</span></a>
+    <a class="m-btn nav__cta" href="#contact"><span>Request CV</span></a>
     <button class="nav__menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu">Menu</button>
   </div>
   <div class="nav__overlay" id="mobile-menu" hidden>
     <div style="display:flex;justify-content:space-between;align-items:center;">
-      <span class="m-mono">FARIDSEC NAVIGATION</span>
+      <span class="t-mono">FARIDSEC DIRECTORY</span>
       <button class="nav__menu-btn" id="mobile-close" type="button">Close</button>
     </div>
     <nav class="nav__overlay-links">
       <a href="#products">Products</a>
-      <a href="#certifications">Certifications</a>
+      <a href="#showcases">Showcases</a>
+      <a href="#badges">Badges &amp; Certs (13)</a>
       <a href="#projects">Projects</a>
       <a href="#writeups">Write-ups</a>
       <a href="#experience">Experience</a>
-      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#volunteering">Volunteering</a>
+      <a href="#skills">Skills &amp; Languages</a>
       <a href="#contact">Request CV</a>
     </nav>
-    <p class="m-mono">contact@faridsec.com</p>
+    <p class="t-mono">contact@faridsec.com</p>
   </div>
 </header>
 
@@ -458,540 +628,894 @@ button { cursor: pointer; border: 0; background: none; }
 
   <!-- 2. HERO SECTION -->
   <section id="hero" class="wrap">
-    <div class="hero__meta">
-      <span class="m-badge">Cybersecurity Architect</span>
-      <span class="m-badge">Cloud &amp; IAM Security</span>
-      <span class="m-badge">Founder @ FaridEx</span>
-    </div>
-    <h1 class="m-display-xl" data-motion="rise">Mohammed Farid<span class="m-dot"></span></h1>
-    
-    <div class="hero__grid">
+    <div class="hero__top">
       <div>
-        <p class="m-body-lg" style="max-width: 54ch; color: var(--color-2);">
-          I design resilient cloud architectures, map complex AWS IAM attack paths, and build security automation tools that isolate choke points before unauthorized access occurs.
-        </p>
-        <div class="hero__actions">
-          <a class="m-btn" href="#contact"><span>Request Full CV by Email</span></a>
-          <a class="m-btn-outline" href="https://faridex.faridsec.com" target="_blank" rel="noopener"><span>Explore FaridEx Product →</span></a>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
+          <span class="m-badge" style="background:var(--amber);">Cybersecurity Architect</span>
+          <span class="m-badge" style="background:var(--mint);">Cloud &amp; IAM Defense</span>
+          <span class="m-badge" style="background:var(--bg-ice);">Founder @ FaridEx</span>
         </div>
+        <h1 class="t-display-xl" data-motion="rise">Mohammed Farid<span class="m-dot"></span></h1>
       </div>
 
-      <div class="m-window hero__portrait" data-motion="keystone">
-        <div class="m-window__pane">
-          <img src="logo.png" alt="Mohammed Farid — FaridSec" onerror="this.style.opacity='0.15'">
-        </div>
-      </div>
+      <a href="#badges" class="hero__ring-badge" aria-label="Scroll to 13 verified badges">
+        <svg class="hero__ring-svg" viewBox="0 0 120 120">
+          <path id="ring-path" d="M 60,60 m -46,0 a 46,46 0 1,1 92,0 a 46,46 0 1,1 -92,0" fill="none"/>
+          <text><textPath href="#ring-path">VERIFIED CREDENTIALS • FARIDSEC • </textPath></text>
+        </svg>
+        <span class="hero__ring-center">13</span>
+      </a>
     </div>
 
-    <!-- Quick Highlights Bar -->
-    <div class="hero__quick" data-motion="lift">
-      <div class="m-surface hero__stat">
-        <span class="m-mono">Flagship Product</span>
-        <span class="hero__stat-val">FaridEx</span>
-        <span class="m-mono" style="color:var(--color-muted)">IAM Attack Graph</span>
+    <div class="hero__board">
+      <div class="hero__main-card" data-motion="rise">
+        <div>
+          <span class="t-mono" style="color:var(--amber);">[ARCHITECTURAL MISSION]</span>
+          <h2 class="t-display-lg" style="margin-top:14px;">Map the trust graph. Cut the attack path at the choke point.</h2>
+          <p class="t-body-lg" style="color:rgba(255,255,255,0.82); margin-top:18px; max-width:54ch;">
+            I design resilient cloud architectures, uncover multi-hop AWS IAM privilege escalation routes, and ship automated security systems that verify and remediate exposures before they are exploited.
+          </p>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:14px;">
+          <a class="m-btn" style="background:var(--amber); color:var(--ink);" href="#contact"><span>Request Full CV by Email →</span></a>
+          <a class="m-btn-outline" style="border-color:#fff; color:#fff;" href="https://faridex.faridsec.com" target="_blank" rel="noopener"><span>Launch FaridEx Platform ↗</span></a>
+        </div>
       </div>
-      <div class="m-surface hero__stat">
-        <span class="m-mono">Credentials</span>
-        <span class="hero__stat-val">13+</span>
-        <span class="m-mono" style="color:var(--color-muted)">Verified Badges</span>
-      </div>
-      <div class="m-surface hero__stat">
-        <span class="m-mono">Research</span>
-        <span class="hero__stat-val">Cloud / IAM</span>
-        <span class="m-mono" style="color:var(--color-muted)">Technical Write-ups</span>
-      </div>
-      <div class="m-surface hero__stat">
-        <span class="m-mono">Focus</span>
-        <span class="hero__stat-val">DevSecOps</span>
-        <span class="m-mono" style="color:var(--color-muted)">Defense in Depth</span>
+
+      <div class="hero__side-stack">
+        <div class="hero__visual-card" data-motion="rise">
+          <img src="logo.png" alt="FaridSec Crest" onerror="this.style.opacity='0.25'">
+        </div>
+        <div class="hero__stats-card" data-motion="rise">
+          <div>
+            <p class="t-mono" style="color:var(--ink-muted);">VERIFIED BADGES</p>
+            <p class="stat-num">13</p>
+          </div>
+          <div>
+            <p class="t-mono" style="color:var(--ink-muted);">FLAGSHIP ENGINE</p>
+            <p class="stat-num" style="color:var(--cobalt);">FaridEx</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- MANIFESTO (Word-by-Word Scroll Illumination) -->
+  <!-- 3. PHILOSOPHY / MANIFESTO (Word-by-Word Scroll Illumination) -->
   <section id="manifesto">
     <div class="wrap mf__grid">
-      <p class="m-mono" style="color:var(--color-3)">[01 // ARCHITECTURE PHILOSOPHY]</p>
-      <p class="mf__text" id="manifesto-text">
-        Perimeter defense is no longer enough. Modern security means mapping every trust relationship as a live graph, finding the single choke point where privilege escalation converges, and shipping human-approved remediation diffs before an attacker can pivot.
+      <div class="sec-tag">
+        <span class="m-glyph" style="--size:24px;"><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="t-mono">01 // PHILOSOPHY</span>
+      </div>
+      <p class="mf__statement" id="manifesto-text">
+        Perimeter checklists fail when identity is the perimeter. True cloud defense means modeling every IAM role, policy, and trust edge as a mathematical graph—isolating the exact choke point where privilege escalation converges.
       </p>
     </div>
   </section>
 
-  <!-- 3. PRODUCTS & SHOWCASES (Sticky Stacking Cards) -->
-  <section id="products" class="wrap section-pad">
-    <div class="section-head">
+  <!-- 4. FLAGSHIP PRODUCTS (Dedicated Section) -->
+  <section id="products" class="wrap sec-pad">
+    <div class="sec-head">
       <div>
-        <p class="m-mono" style="color:var(--color-3); margin-bottom:10px;">[02 // PRODUCTS &amp; SHOWCASES]</p>
-        <h2 class="m-display-lg" data-motion="rise">Built to ship<span class="m-dot"></span></h2>
+        <div class="sec-tag"><span class="t-mono">02 // FLAGSHIP PRODUCT</span></div>
+        <h2 class="t-display-lg" data-motion="rise">FaridEx Platform<span class="m-dot"></span></h2>
       </div>
-      <p class="m-body-lg">Standalone security platforms, open-source engines, and live showcases engineered from the ground up.</p>
+      <p class="t-body-lg">Isolated on its own dedicated product subdomain, engineered to map AWS IAM attack paths and generate human-approved remediation diffs.</p>
     </div>
 
-    <div class="prod-stack">
-      <!-- Product 1: FaridEx -->
-      <article class="prod-card">
-        <div class="prod-card__copy">
-          <div>
-            <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Flagship Product · Launching 2026</span>
-            <h3 class="m-display-lg" style="margin-top:16px;">FaridEx</h3>
-            <p class="m-body-lg" style="margin-top:16px; color:var(--color-2);">
-              Maps AWS IAM trust chains as an in-memory graph, ranks exploitable privilege-escalation paths using Yen’s k-shortest paths, and drafts least-privilege remediation diffs that a human approves.
-            </p>
-          </div>
-          <div>
-            <div class="prod-card__tags" style="margin-bottom:24px;">
-              <span class="m-badge">AWS IAM</span>
-              <span class="m-badge">Graph Theory</span>
-              <span class="m-badge">Native MCP Server</span>
-              <span class="m-badge">AI Remediation</span>
-            </div>
-            <a class="m-btn" href="https://faridex.faridsec.com" target="_blank" rel="noopener"><span>Launch faridex.faridsec.com →</span></a>
-          </div>
+    <article class="prod-feature" data-motion="rise">
+      <div style="display:grid; gap:22px;">
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <span class="m-badge" style="background:var(--amber);">Launching 2026</span>
+          <span class="m-badge">AWS IAM Graph</span>
+          <span class="m-badge">Native MCP Server</span>
         </div>
-        <div class="prod-card__visual">
-          <img src="logo.png" alt="FaridEx IAM Attack Path Engine" onerror="this.style.opacity='0.2'">
+        <h3 class="t-display-lg">Find the attack path. Cut it at the choke point.</h3>
+        <p class="t-body-lg" style="color:var(--ink);">
+          FaridEx ingests AWS IAM configurations into a live security graph, ranks exploitable routes to admin using Yen’s k-shortest paths over <code>sts:AssumeRole</code> and <code>iam:PassRole</code> edges, and drafts least-privilege Terraform/IAM diffs.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:14px; padding-top:8px;">
+          <a class="m-btn" href="https://faridex.faridsec.com" target="_blank" rel="noopener"><span>Open faridex.faridsec.com ↗</span></a>
+          <a class="m-btn-outline" href="#writeups"><span>Read Technical Breakdown ↓</span></a>
         </div>
-      </article>
+      </div>
 
-      <!-- Product 2: Showcase -->
-      <article class="prod-card prod-card--2">
-        <div class="prod-card__copy">
-          <div>
-            <span class="m-badge">Security Automation Showcase</span>
-            <h3 class="m-display-lg" style="margin-top:16px;">Serverless Zero-Trust Lead &amp; CV Pipeline</h3>
-            <p class="m-body-lg" style="margin-top:16px; color:var(--color-2);">
-              Edge-deployed Cloudflare Worker microservice with strict HTTP method enforcement, encrypted secret injection, and automated transactional dispatch via Brevo API.
-            </p>
-          </div>
-          <div class="prod-card__tags">
-            <span class="m-badge">Cloudflare Workers</span>
-            <span class="m-badge">Zero Exposed Keys</span>
-            <span class="m-badge">DMARC / DKIM Enforced</span>
-          </div>
+      <div class="prod-feature__screen">
+        <span class="t-mono" style="color:var(--amber);">LIVE SUBDOMAIN // FARIDEX.FARIDSEC.COM</span>
+        <img src="logo.png" alt="FaridEx Preview" onerror="this.style.opacity='0.2'">
+        <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:12px; color:var(--mint);">
+          <span>EC2:i-09a8f → Role/ProdDataPipeline</span>
+          <span>BLAST RADIUS: 14 ASSETS</span>
         </div>
-        <div class="prod-card__visual">
-          <p class="m-mono" style="color:var(--color-7);">[EDGE WORKER // BREVO API PIPELINE]</p>
-        </div>
-      </article>
-    </div>
+      </div>
+    </article>
   </section>
 
-  <!-- 4. CERTIFICATIONS & BADGES (13 Live Credly Embeds) -->
-  <section id="certifications" class="wrap section-pad ruled">
-    <div class="section-head">
-      <div>
-        <p class="m-mono" style="color:var(--color-3); margin-bottom:10px;">[03 // CREDENTIALS &amp; VERIFIED BADGES]</p>
-        <h2 class="m-display-lg" data-motion="rise">Certifications &amp; Badges<span class="m-dot"></span></h2>
-      </div>
-      <p class="m-body-lg">13 verified credentials hosted directly on Credly. Click any badge below to inspect the cryptographic verification record.</p>
-    </div>
-
-    <ul class="cert-grid" id="cert-grid">
-      <!-- Badge 01 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 01</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="a1ee5026-a224-4bf9-aa40-c7a5b5ef3d7d" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-
-      <!-- Badge 02 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 02</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="915a7e51-2b3f-494e-8fa1-170f4fe38c49" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-
-      <!-- Badge 03 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 03</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="a1feb7a0-ff78-4edc-906f-aa3e29a37724" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-
-      <!-- Badge 04 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 04</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="9f655f4b-9a17-4e29-8894-9ad6c07ab409" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-
-      <!-- Badge 05 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 05</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="4e68f32b-fdcc-49d6-b697-fd5514742e6b" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-
-      <!-- Badge 06 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 06</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="ed8a70e3-b391-4122-8bf4-912c981c9072" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-
-      <!-- Badge 07 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 07</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="edaf925b-5b46-4eca-9337-23fc757f1d69" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-
-      <!-- Badge 08 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 08</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="e9f77d43-992a-4ac1-bd28-05ac667aed4f" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-
-      <!-- Badge 09 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 09</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="c4cae4ba-34a1-460f-b0ea-d318e289afaa" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-
-      <!-- Badge 10 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 10</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="01ca80b3-4e40-45f9-98a0-066b4684a5ec" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-
-      <!-- Badge 11 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 11</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="eacc65bf-93a1-4e9b-bfda-ac516ad8fc46" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-
-      <!-- Badge 12 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 12</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="4b6160e1-68f8-4768-9817-6480bf4fcafc" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-
-      <!-- Badge 13 -->
-      <li class="cert-card">
-        <div class="cert-card__top">
-          <span class="m-mono" style="color:var(--color-muted);">BADGE // 13</span>
-          <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Verified</span>
-        </div>
-        <div class="cert-card__embed">
-          <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="ffb1a7e7-ed43-46d1-b54f-ea65b87bb094" data-share-badge-host="https://www.credly.com"></div>
-        </div>
-      </li>
-    </ul>
-  </section>
-
-  <!-- 5. PROJECTS & CASE STUDIES (Pinned Horizontal Scroll Track) -->
-  <section id="projects">
-    <div class="proj__stage">
-      <div class="wrap" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px;">
+  <!-- 5. ARCHITECTURE SHOWCASES (Refactor Before/After Diff Animation) -->
+  <section id="showcases" class="sec-pad">
+    <div class="wrap">
+      <div class="sec-head">
         <div>
-          <p class="m-mono" style="color:var(--color-3); margin-bottom:8px;">[04 // ENGINEERING PROJECTS]</p>
-          <h2 class="m-display-lg">Selected Projects<span class="m-dot"></span></h2>
+          <div class="sec-tag"><span class="t-mono">03 // ENGINEERING SHOWCASES</span></div>
+          <h2 class="t-display-lg" data-motion="rise">Before &amp; After Architecture<span class="m-dot"></span></h2>
         </div>
-        <p class="m-mono" style="color:var(--color-muted);">SCROLL TO GLIDE THROUGH PROJECTS →</p>
+        <p class="t-body-lg">Real-world security transformations: how vulnerable cloud patterns are refactored into resilient, zero-trust systems.</p>
       </div>
 
-      <ul class="proj__track">
-        <!-- Project 1 -->
-        <li class="proj-item">
-          <div class="proj-item__body">
-            <div>
-              <span class="m-badge">Project 01 · Cloud Security</span>
-              <h3 class="m-display-md" style="margin-top:14px;">AWS IAM Choke-Point Graph Analyzer</h3>
-              <p class="m-body-lg" style="font-size:16px; margin-top:10px;">
-                Engineered an in-memory graph traversal engine over <code>sts:AssumeRole</code> and <code>iam:PassRole</code> edges to isolate multi-hop privilege escalation routes.
-              </p>
-            </div>
-            <a href="https://faridex.faridsec.com" target="_blank" rel="noopener" class="m-mono" style="color:var(--color-3);">View Architecture →</a>
-          </div>
-          <div class="proj-item__img">
-            <img src="logo.png" alt="Project 1" onerror="this.style.opacity='0.2'">
-          </div>
+      <ol class="diff">
+        <li class="diff__row">
+          <div class="diff__old"><span class="diff__sign">−</span><span class="diff__role">Flat IAM alert lists with 400+ unranked findings<span class="diff__strike"></span></span></div>
+          <div class="diff__new"><span class="diff__sign">+</span><span>Yen’s k-shortest path graph choke-point ranking</span></div>
+          <div class="diff__impact"><span class="t-mono" style="color:var(--cobalt);">OUTCOME</span><p>Severs multiple privilege escalation paths by scoping a single ARN.</p></div>
         </li>
-
-        <!-- Project 2 -->
-        <li class="proj-item">
-          <div class="proj-item__body">
-            <div>
-              <span class="m-badge">Project 02 · AI &amp; Security</span>
-              <h3 class="m-display-md" style="margin-top:14px;">Native MCP Security Graph Server</h3>
-              <p class="m-body-lg" style="font-size:16px; margin-top:10px;">
-                JSON-RPC Model Context Protocol server enabling security engineers to query live cloud attack paths directly from Claude Desktop and Cursor.
-              </p>
-            </div>
-            <a href="#contact" class="m-mono" style="color:var(--color-3);">Request Case Study →</a>
-          </div>
-          <div class="proj-item__img">
-            <span class="m-mono" style="color:var(--color-4);">[JSON-RPC // MCP GRAPH AGENT]</span>
-          </div>
+        <li class="diff__row">
+          <div class="diff__old"><span class="diff__sign">−</span><span class="diff__role">Exposed frontend API keys in public repositories<span class="diff__strike"></span></span></div>
+          <div class="diff__new"><span class="diff__sign">+</span><span>Cloudflare Edge Worker with encrypted runtime secrets</span></div>
+          <div class="diff__impact"><span class="t-mono" style="color:var(--cobalt);">OUTCOME</span><p>100% public GitHub portfolio with zero credential leakage.</p></div>
         </li>
-
-        <!-- Project 3 -->
-        <li class="proj-item">
-          <div class="proj-item__body">
-            <div>
-              <span class="m-badge">Project 03 · Infrastructure</span>
-              <h3 class="m-display-md" style="margin-top:14px;">Automated Cloud Posture &amp; Diff Engine</h3>
-              <p class="m-body-lg" style="font-size:16px; margin-top:10px;">
-                Generates human-reviewable Terraform and IAM policy diffs with full cryptographic audit logging.
-              </p>
-            </div>
-            <a href="#contact" class="m-mono" style="color:var(--color-3);">View Details →</a>
-          </div>
-          <div class="proj-item__img">
-            <span class="m-mono" style="color:var(--color-5);">[TERRAFORM // IAM DIFF ENGINE]</span>
-          </div>
+        <li class="diff__row">
+          <div class="diff__old"><span class="diff__sign">−</span><span class="diff__role">EC2 IMDSv1 SSRF exposing temporary role tokens<span class="diff__strike"></span></span></div>
+          <div class="diff__new"><span class="diff__sign">+</span><span>IMDSv2 session-token enforcement + PassRole scoping</span></div>
+          <div class="diff__impact"><span class="t-mono" style="color:var(--cobalt);">OUTCOME</span><p>Eliminates lateral movement from exposed compute instances.</p></div>
         </li>
-      </ul>
-
-      <div class="wrap">
-        <div class="proj__progress" aria-hidden="true">
-          <span class="proj__sq"></span><span class="proj__sq"></span><span class="proj__sq"></span><span class="proj__sq"></span>
-          <span class="proj__sq"></span><span class="proj__sq"></span><span class="proj__sq"></span><span class="proj__sq"></span>
-          <span class="proj__sq"></span><span class="proj__sq"></span><span class="proj__sq"></span><span class="proj__sq"></span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. WRITE-UPS & SECURITY RESEARCH (Sticky Split Viewer) -->
-  <section id="writeups" class="wrap section-pad">
-    <div class="section-head">
-      <div>
-        <p class="m-mono" style="color:var(--color-3); margin-bottom:10px;">[05 // TECHNICAL WRITE-UPS &amp; RESEARCH]</p>
-        <h2 class="m-display-lg" data-motion="rise">Write-ups &amp; Advisories<span class="m-dot"></span></h2>
-      </div>
-      <p class="m-body-lg">Deep-dive breakdowns on cloud exploitation vectors, CTF challenges, and defensive engineering.</p>
-    </div>
-
-    <div class="wu__body">
-      <div class="wu__viewer" aria-hidden="true">
-        <div class="wu__shot is-active"><span class="m-mono wu__shot-label">01 // IMDSv1 SSRF &amp; ROLE PIVOTING</span></div>
-        <div class="wu__shot"><span class="m-mono wu__shot-label">02 // IAM PASSROLE ESCALATION</span></div>
-        <div class="wu__shot"><span class="m-mono wu__shot-label">03 // ZERO-EXPOSURE SERVERLESS AUTH</span></div>
-      </div>
-
-      <ol class="wu__list">
-        <li class="wu__row is-active">
-          <div class="wu__meta"><span class="m-mono" style="color:var(--color-4)">Cloud Exploitation</span><span class="m-mono">8 Min Read · 2026</span></div>
-          <h3 class="m-display-md">Tracing an Attack Path: From EC2 IMDSv1 SSRF to Crown-Jewel S3 Ledger</h3>
-          <p class="m-body-lg" style="font-size:16px;">How an internet-facing instance running IMDSv1 exposes temporary credentials, and how scoping a single <code>iam:PassRole</code> wildcard severs two attack paths at once.</p>
-          <a href="#contact" class="m-mono" style="color:var(--color-3);">Read Full Write-up →</a>
-        </li>
-
-        <li class="wu__row">
-          <div class="wu__meta"><span class="m-mono" style="color:var(--color-5)">Graph Theory in IAM</span><span class="m-mono">6 Min Read · 2026</span></div>
-          <h3 class="m-display-md">Why Yen’s k-Shortest Paths Beats Simple Alert Lists in AWS IAM</h3>
-          <p class="m-body-lg" style="font-size:16px;">Moving from flat compliance checklists to mathematical choke-point isolation in enterprise cloud environments.</p>
-          <a href="#contact" class="m-mono" style="color:var(--color-3);">Read Full Write-up →</a>
-        </li>
-
-        <li class="wu__row">
-          <div class="wu__meta"><span class="m-mono" style="color:var(--color-7)">DevSecOps &amp; AppSec</span><span class="m-mono">5 Min Read · 2026</span></div>
-          <h3 class="m-display-md">Securing Public Repositories with Edge Workers &amp; Encrypted Runtime Secrets</h3>
-          <p class="m-body-lg" style="font-size:16px;">A practical guide to keeping frontend portfolios 100% open-source on GitHub while isolating API keys at the Cloudflare Edge.</p>
-          <a href="#contact" class="m-mono" style="color:var(--color-3);">Read Full Write-up →</a>
+        <li class="diff__row">
+          <div class="diff__old"><span class="diff__sign">−</span><span class="diff__role">Unauthenticated domain email spoofing risks<span class="diff__strike"></span></span></div>
+          <div class="diff__new"><span class="diff__sign">+</span><span>Strict SPF, dual DKIM keys, and DMARC enforcement</span></div>
+          <div class="diff__impact"><span class="t-mono" style="color:var(--cobalt);">OUTCOME</span><p>Cryptographically verified transactional delivery across subdomains.</p></div>
         </li>
       </ol>
     </div>
   </section>
 
-  <!-- 7. EDUCATION, EXPERIENCE, TRAINING & VOLUNTEERING -->
-  <section id="experience" class="wrap section-pad ruled">
-    <div class="section-head">
+  <!-- 6. VERIFIED BADGES & CERTIFICATIONS (13 LARGE STICKY STACKING CARDS) -->
+  <section id="badges" class="wrap sec-pad">
+    <div class="sec-head">
       <div>
-        <p class="m-mono" style="color:var(--color-3); margin-bottom:10px;">[06 // TRACK RECORD]</p>
-        <h2 class="m-display-lg" data-motion="rise">Experience, Education &amp; Volunteering<span class="m-dot"></span></h2>
+        <div class="sec-tag"><span class="t-mono">04 // VERIFIED CREDLY STACK (13 CARDS)</span></div>
+        <h2 class="t-display-lg" data-motion="rise">Badges &amp; Certifications<span class="m-dot"></span></h2>
       </div>
-      <p class="m-body-lg">Academic foundations, hands-on architectural leadership, and community contributions.</p>
+      <p class="t-body-lg">Scroll down through the deck—each enlarged credential card slides up and stacks directly over the previous one. Click any badge to open its live Credly verification page.</p>
     </div>
 
-    <ol class="exp-list" data-motion="lift">
-      <li class="exp-row">
-        <span class="m-badge" style="color:var(--color-3); border-color:var(--color-3);">2025 — Present</span>
-        <h3 class="m-display-md">Cybersecurity Architect &amp; Founder</h3>
-        <p class="m-body-lg" style="font-size:16px;">Leading FaridSec and architecting FaridEx, focusing on AWS IAM attack path discovery, MCP agent integrations, and cloud security posture management.</p>
+    <ol class="badge-stack" id="badge-stack">
+      <!-- Card 01 -->
+      <li class="badge-card" style="--stack-i: 0;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 01 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">01 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: a1ee5026-a224-4bf9-aa40-c7a5b5ef3d7d</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="a1ee5026-a224-4bf9-aa40-c7a5b5ef3d7d" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
       </li>
-      <li class="exp-row">
-        <span class="m-badge">Education</span>
-        <h3 class="m-display-md">Degree / University Name (Placeholder)</h3>
-        <p class="m-body-lg" style="font-size:16px;">Computer Science / Cybersecurity specialization. Focused on network security, cryptography, and distributed cloud systems.</p>
+
+      <!-- Card 02 -->
+      <li class="badge-card" style="--stack-i: 1;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 02 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">02 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: 915a7e51-2b3f-494e-8fa1-170f4fe38c49</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="915a7e51-2b3f-494e-8fa1-170f4fe38c49" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
       </li>
-      <li class="exp-row">
-        <span class="m-badge">Training &amp; Labs</span>
-        <h3 class="m-display-md">Intensive Security Training &amp; Achievements</h3>
-        <p class="m-body-lg" style="font-size:16px;">Completed 13+ industry-verified certifications and badges, advanced red/blue team labs, and cloud security bootcamps.</p>
+
+      <!-- Card 03 -->
+      <li class="badge-card" style="--stack-i: 2;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 03 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">03 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: a1feb7a0-ff78-4edc-906f-aa3e29a37724</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="a1feb7a0-ff78-4edc-906f-aa3e29a37724" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
       </li>
-      <li class="exp-row">
-        <span class="m-badge" style="color:var(--color-4); border-color:var(--color-4);">Volunteering</span>
-        <h3 class="m-display-md">Cybersecurity Community &amp; Mentorship</h3>
-        <p class="m-body-lg" style="font-size:16px;">Sharing open-source security tooling, mentoring peers in cloud security architecture, and contributing to security awareness initiatives.</p>
+
+      <!-- Card 04 -->
+      <li class="badge-card" style="--stack-i: 3;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 04 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">04 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: 9f655f4b-9a17-4e29-8894-9ad6c07ab409</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="9f655f4b-9a17-4e29-8894-9ad6c07ab409" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Card 05 -->
+      <li class="badge-card" style="--stack-i: 4;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 05 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">05 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: 4e68f32b-fdcc-49d6-b697-fd5514742e6b</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="4e68f32b-fdcc-49d6-b697-fd5514742e6b" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Card 06 -->
+      <li class="badge-card" style="--stack-i: 5;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 06 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">06 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: ed8a70e3-b391-4122-8bf4-912c981c9072</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="ed8a70e3-b391-4122-8bf4-912c981c9072" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Card 07 -->
+      <li class="badge-card" style="--stack-i: 6;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 07 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">07 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: edaf925b-5b46-4eca-9337-23fc757f1d69</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="edaf925b-5b46-4eca-9337-23fc757f1d69" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Card 08 -->
+      <li class="badge-card" style="--stack-i: 7;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 08 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">08 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: e9f77d43-992a-4ac1-bd28-05ac667aed4f</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="e9f77d43-992a-4ac1-bd28-05ac667aed4f" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Card 09 -->
+      <li class="badge-card" style="--stack-i: 8;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 09 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">09 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: c4cae4ba-34a1-460f-b0ea-d318e289afaa</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="c4cae4ba-34a1-460f-b0ea-d318e289afaa" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Card 10 -->
+      <li class="badge-card" style="--stack-i: 9;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 10 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">10 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: 01ca80b3-4e40-45f9-98a0-066b4684a5ec</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="01ca80b3-4e40-45f9-98a0-066b4684a5ec" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Card 11 -->
+      <li class="badge-card" style="--stack-i: 10;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 11 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">11 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: eacc65bf-93a1-4e9b-bfda-ac516ad8fc46</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="eacc65bf-93a1-4e9b-bfda-ac516ad8fc46" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Card 12 -->
+      <li class="badge-card" style="--stack-i: 11;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 12 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">12 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: 4b6160e1-68f8-4768-9817-6480bf4fcafc</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="4b6160e1-68f8-4768-9817-6480bf4fcafc" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Card 13 -->
+      <li class="badge-card" style="--stack-i: 12;">
+        <div class="badge-card__info">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="m-badge">CREDENTIAL // 13 OF 13</span>
+            <span class="t-mono">HOSTED ON CREDLY</span>
+          </div>
+          <div>
+            <p class="badge-card__num">13 / 13</p>
+            <h3 class="t-display-md" style="margin-top:12px;">Verified Cybersecurity &amp; Cloud Credential</h3>
+            <p class="t-body-lg" style="color:inherit; opacity:0.85; margin-top:8px;">Cryptographically signed digital badge issued via Credly. Click the interactive badge on the right to inspect the issuer, criteria, and verification ID.</p>
+          </div>
+          <p class="t-mono">ID: ffb1a7e7-ed43-46d1-b54f-ea65b87bb094</p>
+        </div>
+        <div class="badge-card__stage">
+          <div class="badge-card__embed-scale">
+            <div data-iframe-width="240" data-iframe-height="270" data-share-badge-id="ffb1a7e7-ed43-46d1-b54f-ea65b87bb094" data-share-badge-host="https://www.credly.com"></div>
+          </div>
+        </div>
       </li>
     </ol>
   </section>
 
-  <!-- 8. SKILLS, LANGUAGES, INTERESTS & HOBBIES -->
-  <section id="skills" class="section-pad">
-    <div class="wrap">
-      <div class="section-head">
+  <!-- 7. ENGINEERING PROJECTS (Pinned Horizontal Track + 24-Block Progress Bar) -->
+  <section id="projects">
+    <div class="proj__stage">
+      <div class="wrap" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px;">
         <div>
-          <p class="m-mono" style="color:var(--color-3); margin-bottom:10px;">[07 // CAPABILITIES &amp; PERSONA]</p>
-          <h2 class="m-display-lg" data-motion="rise">Skills, Languages &amp; Interests<span class="m-dot"></span></h2>
+          <p class="t-mono" style="color:var(--amber); margin-bottom:8px;">05 // ENGINEERING PROJECTS</p>
+          <h2 class="t-display-lg">Selected Builds<span class="m-dot" style="background:var(--amber);"></span></h2>
         </div>
-        <p class="m-body-lg">A complete view of my technical stack, spoken languages, and personal interests outside the terminal.</p>
+        <p class="t-mono" style="color:var(--mint);">SCROLL TO GLIDE HORIZONTALLY →</p>
       </div>
 
-      <div class="sk-groups">
-        <div class="sk-group">
-          <p class="m-mono" style="color:var(--color-muted);">Cloud &amp; Security Architecture</p>
-          <ul class="sk-pills">
-            <li class="sk-pill sk-pill--sec">AWS IAM &amp; Trust Graphs <small>Core</small></li>
-            <li class="sk-pill sk-pill--sec">Cloud Security Posture (CSPM)</li>
-            <li class="sk-pill sk-pill--sec">Privilege Escalation Analysis</li>
-            <li class="sk-pill sk-pill--sec">Zero-Trust Architecture</li>
-            <li class="sk-pill sk-pill--sec">Threat Modeling &amp; SSRF Mitigation</li>
-            <li class="sk-pill sk-pill--sec">DNSSEC / DMARC / DKIM</li>
-          </ul>
-        </div>
+      <ul class="proj__track">
+        <li class="mod-card">
+          <div class="mod-card__copy">
+            <div>
+              <span class="m-badge">PROJECT 01 · GRAPH ENGINE</span>
+              <h3 class="t-display-md" style="margin-top:16px;">AWS IAM Choke-Point Graph Analyzer</h3>
+              <p style="margin-top:12px;">Models <code>sts:AssumeRole</code> and <code>iam:PassRole</code> trust chains as a directed graph to rank exploitable routes to administrative privileges.</p>
+            </div>
+            <a href="https://faridex.faridsec.com" target="_blank" rel="noopener" class="t-mono">Explore Live Engine →</a>
+          </div>
+          <div class="mod-card__visual"><span class="t-mono" style="color:var(--amber);">[YEN'S K-SHORTEST PATHS // IAM GRAPH]</span></div>
+        </li>
 
-        <div class="sk-group">
-          <p class="m-mono" style="color:var(--color-muted);">Engineering, DevSecOps &amp; AI</p>
-          <ul class="sk-pills">
-            <li class="sk-pill sk-pill--dev">Python &amp; Graph Algorithms</li>
-            <li class="sk-pill sk-pill--dev">TypeScript / JavaScript</li>
-            <li class="sk-pill sk-pill--dev">Cloudflare Workers (Serverless)</li>
-            <li class="sk-pill sk-pill--dev">Model Context Protocol (MCP)</li>
-            <li class="sk-pill sk-pill--dev">Terraform &amp; IaC Remediation</li>
-            <li class="sk-pill sk-pill--dev">Git &amp; CI/CD Hardening</li>
-          </ul>
-        </div>
+        <li class="mod-card mod-card--2">
+          <div class="mod-card__copy">
+            <div>
+              <span class="m-badge">PROJECT 02 · AI &amp; MCP</span>
+              <h3 class="t-display-md" style="margin-top:16px;">Native MCP Security Graph Server</h3>
+              <p style="margin-top:12px;">JSON-RPC Model Context Protocol server enabling security architects to query live cloud attack paths directly inside Claude Desktop and Cursor.</p>
+            </div>
+            <a href="#contact" class="t-mono">Request Architecture Spec →</a>
+          </div>
+          <div class="mod-card__visual"><span class="t-mono" style="color:var(--mint);">[JSON-RPC // MCP AGENT SERVER]</span></div>
+        </li>
 
-        <div class="sk-group">
-          <p class="m-mono" style="color:var(--color-muted);">Languages, Interests &amp; Hobbies</p>
-          <ul class="sk-pills">
-            <li class="sk-pill sk-pill--lang">Arabic <small>Native</small></li>
-            <li class="sk-pill sk-pill--lang">English <small>Professional</small></li>
-            <li class="sk-pill sk-pill--hobby">CTF Challenges</li>
-            <li class="sk-pill sk-pill--hobby">AI Security Agents</li>
-            <li class="sk-pill sk-pill--hobby">System Architecture Design</li>
-            <li class="sk-pill sk-pill--hobby">Tech Community &amp; Mentorship</li>
-          </ul>
+        <li class="mod-card mod-card--3">
+          <div class="mod-card__copy">
+            <div>
+              <span class="m-badge">PROJECT 03 · REMEDIATION</span>
+              <h3 class="t-display-md" style="margin-top:16px;">Human-Approved IAM Diff Generator</h3>
+              <p style="margin-top:12px;">Drafts least-privilege policy diffs that scope wildcards down to specific ARNs, writing every approval to an immutable audit log.</p>
+            </div>
+            <a href="#contact" class="t-mono">View Diff Samples →</a>
+          </div>
+          <div class="mod-card__visual"><span class="t-mono" style="color:var(--amber);">[TERRAFORM // IAM POLICY DIFF]</span></div>
+        </li>
+
+        <li class="mod-card mod-card--4">
+          <div class="mod-card__copy">
+            <div>
+              <span class="m-badge">PROJECT 04 · EDGE SECURITY</span>
+              <h3 class="t-display-md" style="margin-top:16px;">Zero-Key Serverless Dispatch Pipeline</h3>
+              <p style="margin-top:12px;">Cloudflare Worker edge API enforcing strict POST validation and encrypted Brevo secret injection for automated CV dispatch.</p>
+            </div>
+            <a href="#contact" class="t-mono">Test Live Below ↓</a>
+          </div>
+          <div class="mod-card__visual"><span class="t-mono" style="color:var(--coral);">[CLOUDFLARE WORKER // EDGE API]</span></div>
+        </li>
+      </ul>
+
+      <div class="wrap">
+        <ol class="weeks-bar" aria-hidden="true">
+          <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+          <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. TECHNICAL WRITE-UPS & RESEARCH (Sticky Split Viewer) -->
+  <section id="writeups" class="wrap sec-pad">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag"><span class="t-mono">06 // RESEARCH &amp; ADVISORIES</span></div>
+        <h2 class="t-display-lg" data-motion="rise">Technical Write-ups<span class="m-dot"></span></h2>
+      </div>
+      <p class="t-body-lg">Step-by-step offensive and defensive analyses covering cloud privilege escalation, SSRF vectors, and graph theory.</p>
+    </div>
+
+    <div class="wu__grid">
+      <div class="wu__viewer" aria-hidden="true">
+        <div class="wu__slide wu__slide--1 is-active">
+          <span class="t-mono">WRITE-UP // 01</span>
+          <h3 class="t-display-md">IMDSv1 SSRF → Role Pivot → S3 Crown Jewel</h3>
+          <span class="t-mono" style="color:var(--amber);">CLOUD EXPLOITATION &amp; SEVERANCE</span>
+        </div>
+        <div class="wu__slide wu__slide--2">
+          <span class="t-mono">WRITE-UP // 02</span>
+          <h3 class="t-display-md">Yen’s k-Shortest Paths in AWS IAM</h3>
+          <span class="t-mono" style="color:var(--mint);">GRAPH MATHEMATICS IN SECURITY</span>
+        </div>
+        <div class="wu__slide wu__slide--3">
+          <span class="t-mono">WRITE-UP // 03</span>
+          <h3 class="t-display-md">Zero-Secret Public GitHub Architecture</h3>
+          <span class="t-mono" style="color:var(--amber);">DEVSECOPS &amp; EDGE WORKERS</span>
+        </div>
+      </div>
+
+      <ol class="wu__list">
+        <li class="wu__item is-active">
+          <div style="display:flex; justify-content:space-between;"><span class="m-badge" style="background:var(--amber);">Cloud Exploitation</span><span class="t-mono">8 MIN READ</span></div>
+          <h3 class="t-display-md">Tracing an Attack Path: From EC2 IMDSv1 SSRF to Crown-Jewel S3 Ledger</h3>
+          <p class="t-body-lg" style="font-size:16px;">How an internet-facing EC2 instance running IMDSv1 exposes temporary role credentials, and how scoping a single <code>iam:PassRole</code> wildcard severs two attack paths simultaneously.</p>
+          <a href="#contact" class="t-mono" style="color:var(--cobalt);">Request Full Write-up PDF →</a>
+        </li>
+
+        <li class="wu__item">
+          <div style="display:flex; justify-content:space-between;"><span class="m-badge" style="background:var(--mint);">Graph Theory</span><span class="t-mono">6 MIN READ</span></div>
+          <h3 class="t-display-md">Why Yen’s k-Shortest Paths Beats Flat Alert Lists in Cloud IAM</h3>
+          <p class="t-body-lg" style="font-size:16px;">Moving beyond static posture checklists to mathematical choke-point discovery across complex multi-account AWS organizations.</p>
+          <a href="#contact" class="t-mono" style="color:var(--cobalt);">Request Full Write-up PDF →</a>
+        </li>
+
+        <li class="wu__item">
+          <div style="display:flex; justify-content:space-between;"><span class="m-badge" style="background:var(--bg-ice);">DevSecOps</span><span class="t-mono">5 MIN READ</span></div>
+          <h3 class="t-display-md">Securing Public GitHub Pages with Cloudflare Edge Workers &amp; DMARC</h3>
+          <p class="t-body-lg" style="font-size:16px;">How to keep frontend code 100% open-source while isolating API keys and automating transactional email pipelines at the edge.</p>
+          <a href="#contact" class="t-mono" style="color:var(--cobalt);">Request Full Write-up PDF →</a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 9. PROFESSIONAL EXPERIENCE (Dedicated Section) -->
+  <section id="experience" class="wrap sec-pad">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag"><span class="t-mono">07 // CAREER TIMELINE</span></div>
+        <h2 class="t-display-lg" data-motion="rise">Professional Experience<span class="m-dot"></span></h2>
+      </div>
+      <p class="t-body-lg">Architectural leadership, security engineering, and platform development.</p>
+    </div>
+
+    <ol class="exp-table">
+      <li class="exp-row" data-motion="rise">
+        <span class="m-badge" style="background:var(--amber);">2025 — Present</span>
+        <h3 class="t-display-md">Founder &amp; Cybersecurity Architect · FaridSec / FaridEx</h3>
+        <p class="t-body-lg" style="font-size:16px; color:var(--ink);">Designing AWS IAM attack-path discovery engines, building native MCP security servers, and architecting zero-trust serverless workflows.</p>
+      </li>
+      <li class="exp-row" data-motion="rise">
+        <span class="m-badge" style="background:var(--bg-ice);">Security Research</span>
+        <h3 class="t-display-md">Cloud Security &amp; Offensive/Defensive Researcher</h3>
+        <p class="t-body-lg" style="font-size:16px; color:var(--ink);">Conducting deep-dive IAM privilege escalation research, CTF challenge solving, and automated cloud posture remediation.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- 10. EDUCATION & ACADEMIC FOUNDATION (Dedicated Dealt-Out Cards Section) -->
+  <section id="education" class="sec-pad">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="sec-tag"><span class="t-mono">08 // ACADEMIC FOUNDATION</span></div>
+          <h2 class="t-display-lg" data-motion="rise">Education<span class="m-dot"></span></h2>
+        </div>
+        <p class="t-body-lg">Formal computer science, cybersecurity, and engineering coursework.</p>
+      </div>
+
+      <div class="edu-cards" id="edu-cards">
+        <article class="edu-card">
+          <div class="edu-card__top">
+            <span class="t-mono">DEGREE PROGRAM</span>
+            <h3 class="t-display-md" style="margin-top:8px;">Cybersecurity &amp; Computer Science</h3>
+          </div>
+          <div class="edu-card__body">
+            <p>Core focus on network defense, cryptography, operating system internals, and distributed cloud infrastructure.</p>
+            <span class="t-mono" style="margin-top:auto; color:var(--cobalt);">ACADEMIC TRACK</span>
+          </div>
+        </article>
+
+        <article class="edu-card">
+          <div class="edu-card__top">
+            <span class="t-mono">SPECIALIZATION</span>
+            <h3 class="t-display-md" style="margin-top:8px;">Cloud Security &amp; Graph Algorithms</h3>
+          </div>
+          <div class="edu-card__body">
+            <p>Applied graph theory, shortest-path algorithms, identity and access management (IAM), and automated policy verification.</p>
+            <span class="t-mono" style="margin-top:auto; color:var(--forest);">RESEARCH FOCUS</span>
+          </div>
+        </article>
+
+        <article class="edu-card">
+          <div class="edu-card__top">
+            <span class="t-mono">CONTINUOUS LEARNING</span>
+            <h3 class="t-display-md" style="margin-top:8px;">13+ Industry Certifications</h3>
+          </div>
+          <div class="edu-card__body">
+            <p>Backed by 13 verified Credly badges spanning cloud architecture, offensive security labs, and defensive operations.</p>
+            <a href="#badges" class="t-mono" style="margin-top:auto; color:var(--violet);">VIEW ALL 13 BADGES ↑</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. ACHIEVEMENTS, LABS & TRAINING (Sticky Progress Dial Section) -->
+  <section id="achievements" class="wrap sec-pad">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag"><span class="t-mono">09 // MILESTONES &amp; LABS</span></div>
+        <h2 class="t-display-lg" data-motion="rise">Achievements &amp; Intensive Training<span class="m-dot"></span></h2>
+      </div>
+      <p class="t-body-lg">Hands-on accomplishments across offensive labs, defensive architecture challenges, and platform launches.</p>
+    </div>
+
+    <div class="ach__grid">
+      <div class="ach__stage">
+        <span class="t-mono">MILESTONE TRACKER</span>
+        <div class="ach__ring-wrap">
+          <svg class="ach__svg" viewBox="0 0 200 200">
+            <circle class="ach__track" cx="100" cy="100" r="84"/>
+            <circle class="ach__arc" id="ach-arc" cx="100" cy="100" r="84" pathLength="1"/>
+          </svg>
+          <div class="ach__center">
+            <span class="t-display-md" id="ach-counter">01 / 04</span>
+            <span class="t-mono" style="color:var(--cobalt);">COMPLETED</span>
+          </div>
+        </div>
+        <p class="t-mono">SCROLL TO ADVANCE MILESTONES</p>
+      </div>
+
+      <ol class="ach__steps" id="ach-steps">
+        <li class="ach__step is-active">
+          <span class="m-badge" style="background:var(--amber);">MILESTONE 01</span>
+          <h3 class="t-display-md">13 Verified Credly Certifications &amp; Badges</h3>
+          <p class="t-body-lg" style="font-size:16px;">Earned and cryptographically verified 13 industry credentials across cybersecurity, cloud infrastructure, and defensive engineering.</p>
+        </li>
+        <li class="ach__step">
+          <span class="m-badge" style="background:var(--mint);">MILESTONE 02</span>
+          <h3 class="t-display-md">Architected &amp; Launched FaridEx Waitlist Infrastructure</h3>
+          <p class="t-body-lg" style="font-size:16px;">Designed and deployed the standalone product environment at <code>faridex.faridsec.com</code> with custom DNS, TLS, and serverless backend routing.</p>
+        </li>
+        <li class="ach__step">
+          <span class="m-badge" style="background:var(--bg-ice);">MILESTONE 03</span>
+          <h3 class="t-display-md">Offensive &amp; Defensive Cloud Security Labs</h3>
+          <p class="t-body-lg" style="font-size:16px;">Completed intensive hands-on scenarios covering IAM privilege escalation, SSRF exploitation, and automated Terraform remediation.</p>
+        </li>
+        <li class="ach__step">
+          <span class="m-badge" style="background:#ffd8c4;">MILESTONE 04</span>
+          <h3 class="t-display-md">AI Agent &amp; MCP Security Graph Integration</h3>
+          <p class="t-body-lg" style="font-size:16px;">Built JSON-RPC Model Context Protocol tooling to connect live cloud security graphs directly to AI engineering workflows.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 12. VOLUNTEERING & COMMUNITY (Stepped Skyline Cards) -->
+  <section id="volunteering" class="wrap sec-pad">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag"><span class="t-mono">10 // COMMUNITY IMPACT</span></div>
+        <h2 class="t-display-lg" data-motion="rise">Volunteering &amp; Leadership<span class="m-dot"></span></h2>
+      </div>
+      <p class="t-body-lg">Giving back to the cybersecurity and engineering community through mentorship, open-source sharing, and awareness.</p>
+    </div>
+
+    <ul class="vol-skyline" id="vol-skyline">
+      <li class="vol-card">
+        <span class="m-badge">01 // OPEN SOURCE</span>
+        <div>
+          <h3 class="t-display-md">Security Tooling &amp; Templates</h3>
+          <p style="margin-top:8px;">Publishing open-source security patterns and serverless architectures on GitHub.</p>
+        </div>
+      </li>
+      <li class="vol-card">
+        <span class="m-badge">02 // MENTORSHIP</span>
+        <div>
+          <h3 class="t-display-md">Peer Guidance in Cloud &amp; IAM</h3>
+          <p style="margin-top:8px;">Helping students and junior engineers navigate certification paths and cloud security labs.</p>
+        </div>
+      </li>
+      <li class="vol-card">
+        <span class="m-badge">03 // KNOWLEDGE SHARING</span>
+        <div>
+          <h3 class="t-display-md">Technical Write-ups &amp; Guides</h3>
+          <p style="margin-top:8px;">Translating complex attack-path math into clear, actionable engineering guides.</p>
+        </div>
+      </li>
+      <li class="vol-card">
+        <span class="m-badge">04 // AWARENESS</span>
+        <div>
+          <h3 class="t-display-md">Cyber Hygiene Initiatives</h3>
+          <p style="margin-top:8px;">Promoting zero-trust habits, DNS/email authentication, and secure coding practices.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 13. TECHNICAL SKILLS (Spare Hour Lighting-Up Pill Cloud) -->
+  <section id="skills" class="sec-pad">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="t-mono" style="color:var(--amber); margin-bottom:10px;">11 // TECHNICAL ARSENAL</p>
+          <h2 class="t-display-lg" data-motion="rise">Skills &amp; Domains<span class="m-dot" style="background:var(--amber);"></span></h2>
+        </div>
+        <p class="t-body-lg" style="color:rgba(255,255,255,0.8);">Every capability lights up as you scroll—color-coded across Cloud Security, Engineering, and DevSecOps.</p>
+      </div>
+
+      <ul class="sk-cloud" id="sk-cloud">
+        <li class="sk-pill sk-pill--amber">AWS IAM Architecture <small>CORE</small></li>
+        <li class="sk-pill sk-pill--mint">Attack Path Graph Theory <small>CORE</small></li>
+        <li class="sk-pill sk-pill--white">Privilege Escalation Analysis <small>IAM</small></li>
+        <li class="sk-pill sk-pill--coral">Cloudflare Edge Workers <small>SERVERLESS</small></li>
+        <li class="sk-pill sk-pill--sky">Python <small>DEV</small></li>
+        <li class="sk-pill sk-pill--amber">Model Context Protocol (MCP) <small>AI</small></li>
+        <li class="sk-pill sk-pill--mint">Terraform &amp; IaC Diffs <small>DEVSECOPS</small></li>
+        <li class="sk-pill sk-pill--white">TypeScript / JavaScript <small>DEV</small></li>
+        <li class="sk-pill sk-pill--coral">SSRF &amp; IMDSv2 Hardening <small>CLOUD</small></li>
+        <li class="sk-pill sk-pill--sky">Zero-Trust Networking <small>ARCH</small></li>
+        <li class="sk-pill sk-pill--amber">SPF / DKIM / DMARC <small>DNS</small></li>
+        <li class="sk-pill sk-pill--mint">CTF &amp; Threat Hunting <small>OFFENSIVE</small></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 14. SPOKEN LANGUAGES (Dedicated Section) -->
+  <section id="languages" class="wrap sec-pad">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag"><span class="t-mono">12 // COMMUNICATION</span></div>
+        <h2 class="t-display-lg" data-motion="rise">Languages<span class="m-dot"></span></h2>
+      </div>
+      <p class="t-body-lg">Fluent technical and executive communication across Arabic and English.</p>
+    </div>
+
+    <div class="lang-grid">
+      <div class="lang-card" data-motion="rise">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+          <h3 class="t-display-md">Arabic</h3>
+          <span class="m-badge" style="background:var(--amber);">Native / Bilingual</span>
+        </div>
+        <div class="lang-bar"><span class="lang-fill" style="--lang-scale: 1;"></span></div>
+        <p class="t-body-lg" style="font-size:15px;">Native fluency in technical, academic, and executive communication.</p>
+      </div>
+
+      <div class="lang-card" data-motion="rise">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+          <h3 class="t-display-md">English</h3>
+          <span class="m-badge" style="background:var(--mint);">Professional Fluency</span>
+        </div>
+        <div class="lang-bar"><span class="lang-fill" style="--lang-scale: 0.95;"></span></div>
+        <p class="t-body-lg" style="font-size:15px;">Full professional proficiency for security architecture documentation, research write-ups, and international collaboration.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. INTERESTS & HOBBIES (Dedicated Section) -->
+  <section id="interests" class="sec-pad">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="sec-tag"><span class="t-mono">13 // BEYOND THE TERMINAL</span></div>
+          <h2 class="t-display-lg" data-motion="rise">Interests &amp; Hobbies<span class="m-dot"></span></h2>
+        </div>
+        <p class="t-body-lg">What keeps me curious, sharp, and building when I’m off the clock.</p>
+      </div>
+
+      <div class="int-grid" id="int-grid">
+        <div class="int-card">
+          <span class="t-mono">01 // PUZZLES</span>
+          <div>
+            <h3 class="t-display-md">CTF Competitions</h3>
+            <p style="margin-top:6px;">Dissecting cloud, web, and privilege-escalation capture-the-flag challenges.</p>
+          </div>
+        </div>
+        <div class="int-card">
+          <span class="t-mono">02 // AI SYSTEMS</span>
+          <div>
+            <h3 class="t-display-md">Autonomous Security Agents</h3>
+            <p style="margin-top:6px;">Experimenting with LLM tool-calling, MCP servers, and graph-assisted reasoning.</p>
+          </div>
+        </div>
+        <div class="int-card">
+          <span class="t-mono">03 // DESIGN</span>
+          <div>
+            <h3 class="t-display-md">Interactive Web Motion</h3>
+            <p style="margin-top:6px;">Crafting high-craft UI systems and scroll-driven storytelling experiences.</p>
+          </div>
+        </div>
+        <div class="int-card">
+          <span class="t-mono">04 // STRATEGY</span>
+          <div>
+            <h3 class="t-display-md">Graph Mathematics</h3>
+            <p style="margin-top:6px;">Applying network flow and shortest-path algorithms to real-world security problems.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 9. CV TICKET STUB & LIVE CONTACT FORM -->
-  <section id="contact" class="wrap section-pad">
-    <div class="section-head">
+  <!-- 16. FAQ SECTION -->
+  <section id="faq" class="wrap sec-pad">
+    <div class="sec-head">
       <div>
-        <p class="m-mono" style="color:var(--color-3); margin-bottom:10px;">[08 // CV DISPATCH &amp; CONTACT]</p>
-        <h2 class="m-display-lg" data-motion="rise">Request My CV or Get in Touch<span class="m-dot"></span></h2>
+        <div class="sec-tag"><span class="t-mono">14 // QUICK ANSWERS</span></div>
+        <h2 class="t-display-lg" data-motion="rise">Frequently Asked Questions<span class="m-dot"></span></h2>
       </div>
-      <p class="m-body-lg">Enter your email below to automatically log your request via my Cloudflare Worker + Brevo pipeline, or reach out directly.</p>
+      <p class="t-body-lg">Common questions from recruiters, CISOs, and collaborators.</p>
     </div>
 
-    <!-- Tear-off CV Ticket Stub -->
+    <div class="faq__list">
+      <details class="faq__item">
+        <summary><span>How do I receive a copy of your full PDF CV?</span><span class="faq__icon">+</span></summary>
+        <p class="faq__ans">Simply enter your email in the CV Request form right below. My Cloudflare Worker + Brevo pipeline logs your request and dispatches my credentials, or you can email <strong>contact@faridsec.com</strong> directly.</p>
+      </details>
+      <details class="faq__item">
+        <summary><span>Where can I test or join the waitlist for FaridEx?</span><span class="faq__icon">+</span></summary>
+        <p class="faq__ans">FaridEx lives on its dedicated product subdomain at <a href="https://faridex.faridsec.com" target="_blank" rel="noopener" style="text-decoration:underline; font-weight:700;">faridex.faridsec.com</a>.</p>
+      </details>
+      <details class="faq__item">
+        <summary><span>Are all 13 badges on this page verifiable?</span><span class="faq__icon">+</span></summary>
+        <p class="faq__ans">Yes. Every badge in the stacked deck above is embedded directly from Credly’s official verification server. Clicking any badge opens its cryptographic verification record.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 17. CV TEAR-OFF TICKET & LIVE CONTACT FORM -->
+  <section id="contact" class="wrap sec-pad">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag"><span class="t-mono">15 // CV DISPATCH &amp; CONTACT</span></div>
+        <h2 class="t-display-lg" data-motion="rise">Request My CV or Get in Touch<span class="m-dot"></span></h2>
+      </div>
+      <p class="t-body-lg">Secured by a Cloudflare Edge Worker + Brevo pipeline. Enter your details below to request my full PDF resume or start a conversation.</p>
+    </div>
+
     <div class="cv-ticket">
       <div class="cv-sheet">
         <div>
-          <span class="m-badge">Curriculum Vitae · 2026 Edition</span>
-          <h3 class="m-display-md" style="margin-top:14px;">What’s inside the full CV package</h3>
+          <span class="m-badge" style="background:var(--amber);">CURRICULUM VITAE · 2026 EDITION</span>
+          <h3 class="t-display-md" style="margin-top:14px;">What’s included in the full CV PDF</h3>
         </div>
         <ul class="cv-perks">
-          <li>Complete breakdown of all 13+ cybersecurity certifications, verification IDs, and training</li>
-          <li>Detailed architectural case studies (FaridEx IAM graph engine &amp; cloud security projects)</li>
-          <li>Full academic history, achievements, volunteering, and references upon request</li>
+          <li>Complete list of all 13 verified certifications, badge links, and training logs</li>
+          <li>Deep-dive architectural breakdown of FaridEx and cloud security engineering projects</li>
+          <li>Academic history, volunteering leadership, and direct contact references</li>
         </ul>
       </div>
       <div class="cv-stub" id="cv-stub">
         <div>
-          <p class="m-mono">INSTANT DISPATCH</p>
-          <p class="m-display-lg" style="margin-top:8px;">PDF CV</p>
+          <p class="t-mono">AUTOMATED PIPELINE</p>
+          <p class="t-display-lg" style="margin-top:6px;">FULL CV</p>
         </div>
-        <p style="font-size:15px; opacity:0.9;">Use the form below to receive my latest CV directly in your inbox, or email me at <strong>contact@faridsec.com</strong>.</p>
-        <a class="m-btn" style="background:var(--color-1); color:var(--color-2);" href="#cv-form"><span>Request Below ↓</span></a>
+        <p style="font-weight:500;">Submit your email below for priority delivery, or reach out directly at <strong>contact@faridsec.com</strong>.</p>
+        <a class="m-btn" href="#cv-form"><span>Fill Request Form Below ↓</span></a>
       </div>
     </div>
 
-    <!-- Contact Grid & Form -->
     <div class="contact-grid">
-      <div class="contact-info">
-        <h3 class="m-display-md">Direct Channels</h3>
-        <p class="m-body-lg" style="font-size:16px;">
-          Available for cybersecurity architecture roles, cloud posture consulting, research collaborations, and FaridEx early access inquiries.
-        </p>
-        <dl class="contact-details">
-          <div>
-            <dt class="m-mono" style="color:var(--color-3);">Email</dt>
-            <dd><a href="mailto:contact@faridsec.com">contact@faridsec.com</a></dd>
-          </div>
-          <div>
-            <dt class="m-mono" style="color:var(--color-3);">Product</dt>
-            <dd><a href="https://faridex.faridsec.com" target="_blank" rel="noopener">faridex.faridsec.com</a></dd>
-          </div>
-          <div>
-            <dt class="m-mono" style="color:var(--color-3);">Verification</dt>
-            <dd><a href="#certifications">13 Verified Credly Badges ↑</a></dd>
-          </div>
-        </dl>
+      <div class="contact-card">
+        <h3 class="t-display-md">Direct Channels</h3>
+        <p class="t-body-lg" style="font-size:16px;">Open to cybersecurity architecture roles, cloud posture consulting, research collaborations, and FaridEx inquiries.</p>
+        <div style="display:grid; gap:14px; border-top:1.5px solid var(--line); padding-top:18px;">
+          <div><span class="t-mono" style="color:var(--cobalt);">EMAIL: </span><a href="mailto:contact@faridsec.com" style="font-weight:700;">contact@faridsec.com</a></div>
+          <div><span class="t-mono" style="color:var(--cobalt);">PRODUCT: </span><a href="https://faridex.faridsec.com" target="_blank" rel="noopener" style="font-weight:700;">faridex.faridsec.com ↗</a></div>
+          <div><span class="t-mono" style="color:var(--cobalt);">BADGES: </span><a href="#badges" style="font-weight:700;">13 Verified Credly Badges ↑</a></div>
+        </div>
       </div>
 
-      <form id="cv-form" class="m-surface contact-form" novalidate>
-        <h3 class="m-display-md">Send CV / Contact Request</h3>
+      <form id="cv-form" class="contact-card" novalidate>
+        <h3 class="t-display-md">Send CV / Contact Request</h3>
         <div class="field">
           <label for="req-name">YOUR NAME</label>
           <input type="text" id="req-name" name="name" placeholder="Jane Doe" autocomplete="name">
@@ -1001,20 +1525,20 @@ button { cursor: pointer; border: 0; background: none; }
           <input type="email" id="req-email" name="email" placeholder="you@company.com" autocomplete="email" required>
         </div>
         <div class="field">
-          <label for="req-type">INQUIRY TYPE</label>
+          <label for="req-type">REQUEST TYPE</label>
           <select id="req-type" name="type">
             <option value="cv">Send over Full CV (PDF)</option>
-            <option value="role">Architecture / Hiring Inquiry</option>
-            <option value="faridex">FaridEx Early Access &amp; Demo</option>
-            <option value="other">General Networking</option>
+            <option value="role">Cybersecurity Architecture / Hiring Inquiry</option>
+            <option value="faridex">FaridEx Demo &amp; Early Access</option>
+            <option value="other">General Collaboration</option>
           </select>
         </div>
         <div class="field">
           <label for="req-msg">MESSAGE (OPTIONAL)</label>
-          <textarea id="req-msg" name="message" rows="3" placeholder="Let me know how we can collaborate..."></textarea>
+          <textarea id="req-msg" name="message" rows="3" placeholder="Tell me about your team or project..."></textarea>
         </div>
         <button type="submit" class="m-btn" id="cv-submit"><span>Dispatch Request →</span></button>
-        <p class="form-note" id="form-note" role="status" aria-live="polite">Secured via Cloudflare Edge Worker. Zero spam.</p>
+        <p class="form-note" id="form-note" role="status" aria-live="polite">Routed via Cloudflare Edge Worker. Zero spam.</p>
       </form>
     </div>
   </section>
@@ -1024,12 +1548,12 @@ button { cursor: pointer; border: 0; background: none; }
 <!-- FOOTER -->
 <footer id="site-footer">
   <div class="wrap">
-    <div class="foot__row m-mono">
+    <div class="foot__row t-mono">
       <span>MOHAMMED FARID // CYBERSECURITY ARCHITECT</span>
       <a href="#hero">BACK TO TOP ↑</a>
     </div>
-    <p class="foot__word">FARIDSEC<span class="m-dot"></span></p>
-    <div class="foot__row m-mono">
+    <p class="foot__word">FARIDSEC</p>
+    <div class="foot__row t-mono">
       <span>© 2026 FARIDSEC · ALL RIGHTS RESERVED</span>
       <span><a href="https://faridex.faridsec.com" target="_blank" rel="noopener">FARIDEX.FARIDSEC.COM</a> · <a href="mailto:contact@faridsec.com">CONTACT@FARIDSEC.COM</a></span>
     </div>
@@ -1058,7 +1582,7 @@ button { cursor: pointer; border: 0; background: none; }
     gsap.ticker.lagSmoothing(0);
   }
 
-  // 2. Auto-hiding Floating Navigation & Mobile Menu
+  // 2. Auto-hiding Navigation & Mobile Drawer
   const nav = document.getElementById('site-nav');
   const menuBtn = nav.querySelector('.nav__menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -1083,92 +1607,68 @@ button { cursor: pointer; border: 0; background: none; }
 
   if (!prefersMotion) return;
 
-  // 3. Rise, Keystone & Lift Entrance Animations
+  // 3. Rise Entrance Animations
   document.querySelectorAll('[data-motion="rise"]').forEach(el => {
     gsap.fromTo(el,
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
+      { y: 36, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.85, ease: 'power3.out',
         scrollTrigger: { trigger: el, start: 'top 88%', once: true }
       }
     );
   });
 
-  document.querySelectorAll('[data-motion="keystone"]').forEach(el => {
-    const pane = el.querySelector('.m-window__pane');
-    if (!pane) return;
-    gsap.fromTo(pane,
-      { rotationY: -38, scale: 0.92 },
-      { rotationY: -12, scale: 1, ease: 'power2.out',
-        scrollTrigger: { trigger: el, start: 'top 90%', end: 'center 55%', scrub: true }
-      }
-    );
-  });
-
-  document.querySelectorAll('[data-motion="lift"]').forEach(group => {
-    const items = [...group.children];
-    gsap.fromTo(items,
-      { y: 48, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, stagger: 0.08, ease: 'power3.out',
-        scrollTrigger: { trigger: group, start: 'top 88%', once: true }
-      }
-    );
-  });
-
-  // 4. Manifesto Word-by-Word Scroll Illumination
+  // 4. Manifesto Word-by-Word Scroll Illumination (Cut Short Style)
   const mfText = document.getElementById('manifesto-text');
   if (mfText) {
     const words = mfText.textContent.trim().split(/\s+/);
-    mfText.innerHTML = words.map(w => `<span class="word">${w}</span>`).join(' ');
-    const wordSpans = mfText.querySelectorAll('.word');
-    gsap.to(wordSpans, {
-      color: '#f4f4f8',
+    mfText.innerHTML = words.map(w => `<span class="w">${w}</span>`).join(' ');
+    const spans = mfText.querySelectorAll('.w');
+    gsap.to(spans, {
+      color: '#12121a',
       stagger: 0.05,
       ease: 'none',
-      scrollTrigger: {
-        trigger: mfText,
-        start: 'top 82%',
-        end: 'bottom 45%',
-        scrub: 0.4
-      }
+      scrollTrigger: { trigger: mfText, start: 'top 82%', end: 'bottom 45%', scrub: 0.4 }
     });
   }
 
-  // 5. Products Sticky Stack Scale-Down
-  const prodCards = [...document.querySelectorAll('#products .prod-card')];
-  prodCards.forEach((card, i) => {
-    const next = prodCards[i + 1];
+  // 5. Showcases Diff Rows (Refactor Strike + Slide-in)
+  document.querySelectorAll('#showcases .diff__row').forEach(row => {
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: row, start: 'top 86%', end: 'top 48%', scrub: 0.4 }
+    });
+    tl.fromTo(row.querySelector('.diff__strike'), { scaleX: 0 }, { scaleX: 1, duration: 0.4 }, 0)
+      .fromTo(row.querySelector('.diff__new'), { x: 48, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5 }, 0.25)
+      .fromTo(row.querySelector('.diff__impact'), { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, 0.5);
+  });
+
+  // 6. 13 Badges Sticky Stack (Each card scales down as the next slides over it)
+  const badgeCards = [...document.querySelectorAll('#badges .badge-card')];
+  badgeCards.forEach((card, i) => {
+    const next = badgeCards[i + 1];
     if (!next) return;
     gsap.to(card, {
-      scale: 0.93,
-      filter: 'brightness(0.6)',
+      scale: 0.92,
+      y: -10,
+      filter: 'brightness(0.92)',
       ease: 'none',
       scrollTrigger: {
         trigger: next,
         start: 'top bottom',
-        end: 'top 120px',
+        end: () => `top ${86 + i * 10}px`,
         scrub: true
       }
     });
   });
 
-  // 6. Certifications Staggered Entrance
-  const certCards = [...document.querySelectorAll('#certifications .cert-card')];
-  gsap.fromTo(certCards,
-    { y: 40, opacity: 0 },
-    { y: 0, opacity: 1, duration: 0.7, stagger: 0.05, ease: 'power2.out',
-      scrollTrigger: { trigger: '#cert-grid', start: 'top 85%', once: true }
-    }
-  );
-
-  // 7. Projects Horizontal Pinned Track
-  const projSection = document.getElementById('projects');
-  const projStage = projSection.querySelector('.proj__stage');
-  const projTrack = projSection.querySelector('.proj__track');
-  const projSquares = [...projSection.querySelectorAll('.proj__sq')];
+  // 7. Projects Horizontal Pinned Track + 24-Block Progress Bar
+  const projSec = document.getElementById('projects');
+  const projStage = projSec.querySelector('.proj__stage');
+  const projTrack = projSec.querySelector('.proj__track');
+  const weeks = [...projSec.querySelectorAll('.weeks-bar li')];
 
   ScrollTrigger.matchMedia({
     '(min-width: 901px)': function() {
-      projSection.classList.add('is-pinned');
+      projSec.classList.add('is-pinned');
       const getDist = () => Math.max(0, projTrack.scrollWidth - window.innerWidth + 64);
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -1181,57 +1681,108 @@ button { cursor: pointer; border: 0; background: none; }
         }
       });
       tl.to(projTrack, { x: () => -getDist(), ease: 'none', duration: 1 }, 0);
-      projSquares.forEach((sq, idx) => {
-        tl.to(sq, { '--fill': 1, duration: 0.08, ease: 'none' }, (idx / projSquares.length) * 0.92);
+      weeks.forEach((sq, idx) => {
+        tl.to(sq, { '--fill': 1, duration: 0.05 }, (idx / weeks.length) * 0.95);
       });
-      return () => projSection.classList.remove('is-pinned');
+      return () => projSec.classList.remove('is-pinned');
     }
   });
 
   // 8. Write-ups Split Viewer Sync
-  const wuRows = [...document.querySelectorAll('#writeups .wu__row')];
-  const wuShots = [...document.querySelectorAll('#writeups .wu__shot')];
-  wuRows.forEach((row, idx) => {
+  const wuItems = [...document.querySelectorAll('#writeups .wu__item')];
+  const wuSlides = [...document.querySelectorAll('#writeups .wu__slide')];
+  wuItems.forEach((item, idx) => {
     ScrollTrigger.create({
-      trigger: row,
+      trigger: item,
       start: 'top 65%',
       end: 'bottom 45%',
-      onEnter: () => setActiveWu(idx),
-      onEnterBack: () => setActiveWu(idx)
+      onEnter: () => setWu(idx),
+      onEnterBack: () => setWu(idx)
     });
   });
-  function setActiveWu(activeIdx) {
-    wuRows.forEach((r, i) => r.classList.toggle('is-active', i === activeIdx));
-    wuShots.forEach((s, i) => s.classList.toggle('is-active', i === activeIdx));
+  function setWu(activeIdx) {
+    wuItems.forEach((el, i) => el.classList.toggle('is-active', i === activeIdx));
+    wuSlides.forEach((el, i) => el.classList.toggle('is-active', i === activeIdx));
   }
 
-  // 9. Skills Pills Lighting Up on Scroll
-  const pills = [...document.querySelectorAll('#skills .sk-pill')];
+  // 9. Education Cards Fan-Out Deal (Refactor Fees / Spare Hour Deal)
+  const eduCards = [...document.querySelectorAll('#edu-cards .edu-card')];
+  const tilts = [-5, 2, 6];
+  eduCards.forEach((card, i) => {
+    gsap.fromTo(card,
+      { y: 60, rotation: tilts[i % tilts.length], opacity: 0 },
+      { y: 0, rotation: 0, opacity: 1, duration: 0.85, delay: i * 0.1, ease: 'power3.out',
+        scrollTrigger: { trigger: '#edu-cards', start: 'top 85%', once: true }
+      }
+    );
+  });
+
+  // 10. Achievements Circular Dial Progress
+  const achArc = document.getElementById('ach-arc');
+  const achCounter = document.getElementById('ach-counter');
+  const achSteps = [...document.querySelectorAll('#ach-steps .ach__step')];
+  if (achArc && achSteps.length) {
+    gsap.fromTo(achArc,
+      { strokeDashoffset: 1 },
+      { strokeDashoffset: 0, ease: 'none',
+        scrollTrigger: {
+          trigger: '#ach-steps',
+          start: 'top 70%',
+          end: 'bottom 50%',
+          scrub: 0.3,
+          onUpdate: self => {
+            const idx = Math.min(achSteps.length - 1, Math.floor(self.progress * achSteps.length));
+            achCounter.textContent = `0${idx + 1} / 0${achSteps.length}`;
+            achSteps.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+          }
+        }
+      }
+    );
+  }
+
+  // 11. Volunteering Skyline Rise (Spare Hour Skyline)
+  const volCards = [...document.querySelectorAll('#vol-skyline .vol-card')];
+  gsap.fromTo(volCards,
+    { y: 90, opacity: 0 },
+    { y: 0, opacity: 1, duration: 0.9, stagger: 0.1, ease: 'power3.out',
+      scrollTrigger: { trigger: '#vol-skyline', start: 'top 85%', once: true }
+    }
+  );
+
+  // 12. Technical Skills Pills Lighting Up (Spare Hour Streets Fill)
+  const skPills = [...document.querySelectorAll('#sk-cloud .sk-pill')];
   ScrollTrigger.create({
-    trigger: '#skills',
-    start: 'top 78%',
+    trigger: '#sk-cloud',
+    start: 'top 80%',
     onEnter: () => {
-      pills.forEach((pill, i) => {
-        setTimeout(() => pill.classList.add('is-lit'), i * 45);
-      });
+      skPills.forEach((pill, i) => setTimeout(() => pill.classList.add('is-lit'), i * 55));
     }
   });
 
-  // 10. CV Ticket Stub Tear-off Tilt
+  // 13. Interests Collage Deal
+  const intCards = [...document.querySelectorAll('#int-grid .int-card')];
+  gsap.fromTo(intCards,
+    { scale: 0.85, rotation: i => (i % 2 === 0 ? -4 : 4), opacity: 0 },
+    { scale: 1, rotation: 0, opacity: 1, duration: 0.8, stagger: 0.08, ease: 'back.out(1.6)',
+      scrollTrigger: { trigger: '#int-grid', start: 'top 85%', once: true }
+    }
+  );
+
+  // 14. CV Ticket Stub Tear-Off Tilt (Halide Membership Stub)
   const stub = document.getElementById('cv-stub');
   if (stub) {
     gsap.fromTo(stub,
       { rotate: 0, y: 0 },
       { rotate: 2.5, y: 12, ease: 'back.out(2)',
-        scrollTrigger: { trigger: '.cv-ticket', start: 'top 75%', end: 'center 50%', scrub: 0.5 }
+        scrollTrigger: { trigger: '.cv-ticket', start: 'top 78%', end: 'center 48%', scrub: 0.5 }
       }
     );
   }
 })();
 
-// 11. Cloudflare Worker Form Submission (Brevo Integration)
+// 15. Cloudflare Worker Form Submission (Brevo Integration)
 (() => {
-  constENDPOINT = "https://faridex-notify.devsecop3.workers.dev";
+  const WORKER_ENDPOINT = "https://faridex-notify.devsecop3.workers.dev";
   const CONTACT_EMAIL = "contact@faridsec.com";
   const form = document.getElementById("cv-form");
   const emailInput = document.getElementById("req-email");
@@ -1254,7 +1805,7 @@ button { cursor: pointer; border: 0; background: none; }
     try {
       btn.disabled = true;
       setStatus("Encrypting & dispatching your request...");
-      const res = await fetch(constENDPOINT, {
+      const res = await fetch(WORKER_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify({ email })
